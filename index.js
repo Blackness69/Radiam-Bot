@@ -73,4 +73,5 @@ for (const file of tableFiles) {
 }
 
 
-client.login(token);
+
+client.login(process.env.token);
