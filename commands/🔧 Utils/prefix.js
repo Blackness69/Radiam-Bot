@@ -4,7 +4,7 @@ const prefixSchema = require('../../Schemas/utils/prefixSchema');
 const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
-  usage: 'd.prefix <new prefix>',
+  usage: 'r.prefix <new prefix>',
   name: 'prefix',
   description: 'Change the bot prefix.',
   async execute({ args, msg }) {

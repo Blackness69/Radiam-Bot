@@ -15,6 +15,7 @@
     "ascii-tables": "^0.0.1",
     "axios": "^1.6.8",
     "colors": "^1.4.0",
+    "discord-gamecord": "^4.4.2",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
