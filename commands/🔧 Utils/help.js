@@ -30,7 +30,7 @@ module.exports = {
       const commandsInCategory = commands.filter(command => command.category.split(' ')[1] === category.name)
       const commandList = commandsInCategory.map(command => ({name: `${command.name} | \`\`${command.usage}\`\``, value: command.description || 'No description', inline: true}))
       const categoryEmbed = new EmbedBuilder()
-        .setColor('#ff0000')
+        .setColor('#A020F0')
         .setTitle(`${category.emoji.id ? `<${category.emoji.animated ? 'a' : ''}:${category.emoji.name}:${category.emoji.id}>` : category.emoji.name} ${category.name} Commands`)
         .setDescription(`My prefix for this server - \`\`${prefix}\`\`\n\nAvailable ${category.name} commands list`)
         .setAuthor({
@@ -60,7 +60,7 @@ module.exports = {
       .addOptions(options)
     )
     const helpEmbed = new EmbedBuilder()
-      .setColor('#ff0000')
+      .setColor('#A020F0')
       .setTitle('List of available commands category')
       .setAuthor({
         name: msg.guild.name,
