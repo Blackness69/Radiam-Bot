@@ -38,7 +38,7 @@ module.exports = {
     });
 
     Game.startGame();
-    Game.on('gameover', result => {
+    Game.on('gameOver', result => {
       return;
     });
   }
