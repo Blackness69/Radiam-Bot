@@ -14,7 +14,7 @@ module.exports = {
 
     const Game = new TicTacToe({
       message: msg,
-      opponent: opponent,
+      opponent: opponent.user,
       embed: {
         title: 'Tic Tac Toe',
         color: '#A020F0',
