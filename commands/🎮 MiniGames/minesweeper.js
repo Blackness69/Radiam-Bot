@@ -3,7 +3,7 @@ module.exports = {
   usage: 'r.minesweeper',
   name: 'minesweeper',
   description: 'Play a minesweeper game',
-  async execute({msg, client, interaction}) {
+  async execute({msg}) {
     const Game = new Minesweeper({
       message: msg,
       isSlashGame: false,

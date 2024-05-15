@@ -8,8 +8,8 @@ module.exports = {
   async execute({ msg, args }) {
     // Check if an opponent was mentioned
     const opponent = msg.mentions.members.first();
-    if (!opponent) {
-      return msg.reply('Please mention the opponent to start a Tic Tac Toe game.');
+    if (!opponent || opponent.user.bot || opponent.id === msg.author.id) {
+      return msg.reply('Please mention a valid opponent (a user, not a bot, and not yourself) to start a Tic Tac Toe game.');
     }
 
     const Game = new TicTacToe({
@@ -40,6 +40,6 @@ module.exports = {
     Game.startGame();
     Game.on('gameover', result => {
       return;
-    })
+    });
   }
 };

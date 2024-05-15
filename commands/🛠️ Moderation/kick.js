@@ -1,0 +1,47 @@
+const { ownerId } = require('../../config.js');
+const { PermissionsBitField } = require('discord.js');
+
+module.exports = {
+  usage: 'r.kick <mention | username | user_id>',
+  name: 'kick',
+  description: 'Kick a user from the server',
+  execute({ args, msg }) {
+    let user;
+
+    // Check if the first argument is a mention
+    if (msg.mentions.users.size) {
+      user = msg.mentions.users.first();
+    } else {
+      // Try to find the user by username or ID
+      const input = args[0];
+
+      // Find user with ID
+      if (input && input.match(/^\d{17,19}$/)) {
+        user = msg.guild.members.fetch(input).catch(() => null);
+      } else if (input) { // Check if input is defined
+        // Find user with username
+        user = msg.guild.members.cache.find(member => member.user.username.toLowerCase() === input.toLowerCase());
+      }
+    }
+
+    if (!user) return msg.reply('Please provide a valid user to kick!');
+
+    const member = msg.guild.members.cache.get(user.id);
+
+    if (!member) return msg.reply('That user is not in this server!');
+
+    if (!msg.member.permissions.has(PermissionsBitField.Flags.KickMembers)) return msg.reply("You don't have the necessary permission to use that command!");
+
+    if (!member.kickable) return msg.reply("I can't kick that user!");
+    if (msg.guild.ownerId === member.id) return msg.reply("You can't kick the server owner!");
+    if (msg.author.id === member.id) return msg.reply("You can't kick yourself!");
+
+    const reason = args.slice(1).join(' ') || 'No reason provided';
+    member.kick(reason)
+      .then(() => msg.reply(`Successfully kicked ${user.tag}, Reason: ${reason}`))
+      .catch(error => {
+        console.error('Error kicking user:', error);
+        msg.reply('An error occurred while trying to kick the user.');
+      });
+  },
+};

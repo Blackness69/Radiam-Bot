@@ -2,7 +2,7 @@
 const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
-  usage: 'r.unban <user id or username>',
+  usage: 'r.unban <user id | username>',
   name: 'unban',
   description: 'Unban a user from the server.',
   async execute({ msg, args }) {
