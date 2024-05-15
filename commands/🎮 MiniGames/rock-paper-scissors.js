@@ -1,8 +1,9 @@
 const { RockPaperScissors } = require('discord-gamecord');
 
 module.exports = {
+  usage: 'r.rock-paper-scissors <opponent>',
   name: 'rock-paper-scissors',
-  aliases: ['rps'],
+  aliases: ['rps', 'rock-paper-scissor'],
   description: 'Play a Rock Paper Scissors game with your friend.',
   async execute({ msg }) {
     // Check if an opponent was mentioned

@@ -1,7 +1,7 @@
 const { TicTacToe } = require('discord-gamecord');
 
 module.exports = {
-  usage: 'r.tic-tac-toe <@opponent user>',
+  usage: 'r.tic-tac-toe <opponent user>',
   name: 'tic-tac-toe',
   aliases: ['ttt'],
   description: 'Play a Tic Tac Toe game.',
