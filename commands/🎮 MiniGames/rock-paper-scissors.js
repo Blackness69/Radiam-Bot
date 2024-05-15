@@ -1,21 +1,23 @@
 const { RockPaperScissors } = require('discord-gamecord');
 
 module.exports = {
-  name: 'rock-paper-siccors',
+  name: 'rock-paper-scissors',
   aliases: ['rps'],
   description: 'Play a Rock Paper Scissors game with your friend.',
-  async execute({msg}) {
-    const opponentUser = msg.mentions.members.first();
-    if (!opponentUser) return msg.reply('Please provide a opponent to play with.');
+  async execute({ msg }) {
+    // Check if an opponent was mentioned
+    const opponent = msg.mentions.members.first();
+    if (!opponent || opponent.user.bot || opponent.id === msg.author.id) {
+      return msg.reply('Please mention a valid opponent (a user, not a bot, and not yourself) to start a Rock Paper Scissors game.');
+    }
 
     const Game = new RockPaperScissors({
       message: msg,
-      isSlashGame: true,
-      opponent: opponentUser,
+      opponent: opponent,
       embed: {
-        titpe: 'Rock Paper Scissors',
+        title: 'Rock Paper Scissors',
         color: '#A020F0',
-        description: 'Press a buttom to make choice.'
+        description: 'Press a button to make your choice.'
       },
       buttons: {
         rock: 'Rock',
@@ -30,16 +32,16 @@ module.exports = {
       mentionedUser: true,
       timeoutTime: 60000,
       buttonStyle: 'PRIMARY',
-      pickMessage: 'You choose {emoji}',
-      winMessage: '**{player}** won the Game! Congratulations! 🎉',
-      tieMessage: 'The Game tied! No one won the Game.',
-      timeoutMessage: 'The game went undefined! No one won the game.',
-      playerOnlyMessage: 'Only **${player}** and **${opponent}** can use these buttons.'
+      pickMessage: 'You chose {emoji}',
+      winMessage: '**{player}** won the game! Congratulations! 🎉',
+      tieMessage: 'The game tied! No one won the game.',
+      timeoutMessage: 'The game timed out! No one won the game.',
+      playerOnlyMessage: 'Only **{player}** and **{opponent}** can use these buttons.'
     });
 
     Game.startGame();
     Game.on('gameOver', result => {
       return;
-    })
+    });
   }
-}
+};
