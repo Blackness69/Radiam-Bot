@@ -19,6 +19,10 @@ module.exports = {
     if (!msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
       return msg.reply('You do not have admin permission to use this command.');
     }
+
+    if (bannedPrefix.some(prefix => newPrefix.includes(prefix))) {
+      return msg.reply('This prefix is temporarily unavailable.');
+    } 
     
     try {
       
