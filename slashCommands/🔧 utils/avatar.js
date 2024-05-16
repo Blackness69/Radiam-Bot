@@ -1,6 +1,4 @@
-const {  MessageEmbed, MessageActionRow, MessageButton, ButtonStyle } = require('discord.js');
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('@discordjs/builders');
-
+const {  EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -24,11 +22,11 @@ module.exports = {
             );
 
         const avatar = new EmbedBuilder()
-            .setDescription(`Avatar of **${user.username}**.`)
-            .setFooter({ text: interaction.guild.name, iconURL: interaction.client.user.displayAvatarURL({ dynamic: true }) })
+            .setDescription(`Avatar of **${user.username}**`)
+            .setFooter({ text: `${interaction.guild.name}`, iconURL: interaction.client.user.displayAvatarURL({ dynamic: true }) })
             .setImage(user.displayAvatarURL({ format: "png", size: 2048 }))
             .setTimestamp()
-            .setColor("#A020F0");
+            .setColor('#A020F0');
 
         await interaction.reply({ embeds: [avatar], components: [link] });
     },
