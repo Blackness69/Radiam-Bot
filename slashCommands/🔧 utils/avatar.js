@@ -28,7 +28,7 @@ module.exports = {
             .setFooter({ text: interaction.guild.name, iconURL: interaction.client.user.displayAvatarURL({ dynamic: true }) })
             .setImage(user.displayAvatarURL({ format: "png", size: 2048 }))
             .setTimestamp()
-            .setColor("A020F0");
+            .setColor("#A020F0");
 
         await interaction.reply({ embeds: [avatar], components: [link] });
     },
