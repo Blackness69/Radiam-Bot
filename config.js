@@ -16,4 +16,4 @@ module.exports = {
   mongoURL: process.env.mongoURL || readFileSync('mongoURL.txt', 'utf-8'),
   YOUTUBE_API_KEY: process.env.YoutubeApiKey,
   bannedPrefix: ['<@1233698268584870010>']
-}; 
+};
