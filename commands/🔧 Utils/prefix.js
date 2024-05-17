@@ -21,7 +21,7 @@ module.exports = {
     }
 
     if (bannedPrefix.some(prefix => newPrefix.includes(prefix))) {
-      return msg.reply('This prefix is temporarily unavailable.');
+      return msg.reply('This prefix is unavailable.');
     } 
     
     try {

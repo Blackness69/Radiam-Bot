@@ -84,7 +84,7 @@ const collector = response.createMessageComponentCollector({time: 480000 });
       })
       collector.on('end', async () => {
         try {
-          await response.edit({ content: 'Help menu timed out.', components: [] });
+          await response.edit({ content: 'Help menu timed out. Try using r.help again.' });
         } catch (error) {
           console.error('Error updating message:', error);
         }
