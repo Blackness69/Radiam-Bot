@@ -17,7 +17,7 @@ module.exports = {
 
         const avatar = new EmbedBuilder()
             .setDescription(`Avatar of **${user.username}**`)
-            .setFooter({ text: `${interaction.guild.name}`, iconURL: interaction.client.user.displayAvatarURL({ dynamic: true }) })
+            .setFooter({ text: `${msg.guild.name}`, iconURL: msg.client.user.displayAvatarURL({ dynamic: true }) })
             .setImage(user.displayAvatarURL({ format: "png", size: 2048 }))
             .setTimestamp()
             .setColor('#A020F0');
