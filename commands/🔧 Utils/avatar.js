@@ -1,11 +1,11 @@
-const {  EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
-        name: 'avatar',
-        aliases: ['av'],
-        description: 'Get your own avatar or the avatar of another user',
-    async execute({msg}) {
-        const user = msg.mentions.users.first() || msg.author;
+    name: 'avatar',
+    aliases: ['av'],
+    description: 'Get your own avatar or the avatar of another user',
+    async execute({ msg }) {
+        const user = msg.mentions.members.first()?.user || msg.author;
 
         const link = new ActionRowBuilder()
             .addComponents(
