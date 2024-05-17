@@ -4,7 +4,7 @@ const prefixSchema = require('./Schemas/utils/prefixSchema');
 
 async function getPrefix(guildId) {
   const prefixData = await prefixSchema.findOne({ guildId });
-  return prefixData ? prefixData.prefix : "r."; // Default prefix 'cp'
+  return prefixData ? prefixData.prefix : "r."; // Default prefix 'r.'
 }
 
 
