@@ -5,7 +5,7 @@ module.exports = {
         aliases: ['av'],
         description: 'Get your own avatar or the avatar of another user',
     async execute({msg}) {
-        const user = msg.mentions.members.first() || msg.author;
+        const user = msg.mentions.users.first() || msg.author;
 
         const link = new ActionRowBuilder()
             .addComponents(
