@@ -13,11 +13,12 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
-const { ActivityType, Collection, GatewayIntentBits, Client, Collector, VoiceChannel, EmbedBuilder } = require('discord.js');
+const { ActivityType, Collection, GatewayIntentBits, Client, Collector, VoiceChannel, EmbedBuilder, Partials } = require('discord.js');
 
 const Discord = require('discord.js');
 const client = new Client({
   intents: Object.keys(GatewayIntentBits).map(intent => intent),
+  partials: [Partials.Message, Partials.GuildMessageReactions, Partials.Channel, Partials.MessageReactionAdd, Partials.MessageReactionRemove, Partials.Reaction],
   allowedMentions: { repliedUser: false, parse: ['users'] }
 });
 
