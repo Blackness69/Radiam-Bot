@@ -11,7 +11,18 @@ client.on("messageCreate", async msg => {
   const botMentionWithExclamation = `<@!${client.user.id}>`;
 
   if (msg.content === botMention || msg.content === botMentionWithExclamation) {
-    return msg.reply(`Who pinged me? Oh hey ${msg.author.username}! My prefix for this server is **${currentPrefix}**`);
+    return msg.reply(`Who pinged me? Oh hey **${msg.author.username}**! My prefix for this server is **${currentPrefix}**. Type r.help for more information.`);
+  }
+
+  // AutoResponder
+  const data = await schema.findOne({ guildId: msg.guild.id });
+  if (data) {
+    for (const d of data.autoresponses) {
+      if (msg.content.toLowerCase().includes(d.trigger.toLowerCase())) {
+        await msg.reply(d.response);
+        break; // Ensure it stops processing further once an autoresponse is triggered
+      }
+    }
   }
 
   let messageContent = msg.content;
@@ -42,17 +53,6 @@ client.on("messageCreate", async msg => {
     } catch (error) {
       console.error(error);
       return msg.reply('There was an error executing that command!');
-    }
-  }
-
-  // AutoResponder
-  const data = await schema.findOne({ guildId: msg.guild.id });
-  if (!data) return;
-
-  for (const d of data.autoresponses) {
-    if (msg.content.includes(d.trigger)) {
-      msg.reply(d.response);
-      break;
     }
   }
 });
