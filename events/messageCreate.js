@@ -1,38 +1,58 @@
-// messageCreate.js
 const { getPrefix, ownerIds } = require('../config');
 const Discord = require('discord.js');
 const client = require(process.cwd() + '/index.js');
+const schema = require('../Schemas/utils/autoresponder');
 
 client.on("messageCreate", async msg => {
   if (!msg.content || msg.author.bot) return;
+
   const currentPrefix = await getPrefix(msg.guild.id);
-  const botMention = msg.content === `<@${client.user.id}>`;
-  if (botMention) {
-    return msg.reply(`Who pinged me? Oh hey ${msg.author.displayName}! My prefix for this server is **${currentPrefix}**`);
+  const botMention = `<@${client.user.id}>`;
+  const botMentionWithExclamation = `<@!${client.user.id}>`;
+
+  if (msg.content === botMention || msg.content === botMentionWithExclamation) {
+    return msg.reply(`Who pinged me? Oh hey ${msg.author.username}! My prefix for this server is **${currentPrefix}**`);
   }
 
-  const customPrefix = (await getPrefix(msg.guild.id)).toLowerCase();
-  const defaultPrefix = "r.";
-  let messageContent = msg.content.toLowerCase(); // Declare as let
+  let messageContent = msg.content;
+  let prefixLength = null;
 
-  // Check if the message starts with the custom prefix or with the default prefix "cp"
-  if (!messageContent.startsWith(customPrefix) && !messageContent.startsWith(defaultPrefix)) return;
-
-  let prefixLength = customPrefix.length;
-  if (!messageContent.startsWith(customPrefix)) {
-    prefixLength = defaultPrefix.length; // Default prefix length 'r.'
+  if (messageContent.startsWith(botMention) || messageContent.startsWith(botMentionWithExclamation)) {
+    if (messageContent.startsWith(botMention)) {
+      prefixLength = botMention.length;
+    } else if (messageContent.startsWith(botMentionWithExclamation)) {
+      prefixLength = botMentionWithExclamation.length;
+    }
+  } else if (messageContent.toLowerCase().startsWith(currentPrefix.toLowerCase())) {
+    prefixLength = currentPrefix.length;
+  } else if (messageContent.toLowerCase().startsWith("r.")) {
+    prefixLength = "r.".length;
+  } else {
+    return;
   }
 
-  const args = messageContent.slice(prefixLength).trim().split(/ +/);
-
+  messageContent = msg.content.slice(prefixLength).trim();
+  const args = messageContent.split(/ +/);
   const commandName = args.shift().toLowerCase();
+
   const command = client.commands.get(commandName) || client.commands.get(client.aliases.get(commandName));
   if (command) {
     try {
-      await command.execute({ client, Discord, args, prefix: customPrefix, msg });
+      await command.execute({ client, Discord, args, prefix: currentPrefix, msg });
     } catch (error) {
       console.error(error);
       return msg.reply('There was an error executing that command!');
     }
-  } 
+  }
+
+  // AutoResponder
+  const data = await schema.findOne({ guildId: msg.guild.id });
+  if (!data) return;
+
+  for (const d of data.autoresponses) {
+    if (msg.content.includes(d.trigger)) {
+      msg.reply(d.response);
+      break;
+    }
+  }
 });
