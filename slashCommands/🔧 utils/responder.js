@@ -91,13 +91,22 @@ module.exports = {
     } else if (subcommand === 'remove') {
       const trigger = interaction.options.getString('trigger').toLowerCase();
 
-      const data = await schema.findOneAndUpdate(
+      const data = await schema.findOne({ guildId });
+      if (!data) {
+        const embed = new EmbedBuilder()
+          .setDescription('I couldn\'t find an auto response with that trigger.');
+        return interaction.reply({ embeds: [embed], ephemeral: true });
+      }
+
+      const initialCount = data.autoresponses.length;
+
+      await schema.updateOne(
         { guildId },
-        { $pull: { autoresponses: { trigger } } },
-        { new: true }
+        { $pull: { autoresponses: { trigger } } }
       );
 
-      if (!data || !data.autoresponses.some(a => a.trigger === trigger)) {
+      const updatedData = await schema.findOne({ guildId });
+      if (updatedData.autoresponses.length === initialCount) {
         const embed = new EmbedBuilder()
           .setDescription('I couldn\'t find an auto response with that trigger.');
         return interaction.reply({ embeds: [embed], ephemeral: true });
