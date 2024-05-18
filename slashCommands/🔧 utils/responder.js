@@ -46,16 +46,17 @@ module.exports = {
     ),
   async execute({ interaction }) {
     const subcommand = interaction.options.getSubcommand();
+    const guildId = interaction.guild.id;
 
     if (subcommand === 'add') {
       const trigger = interaction.options.getString('trigger').toLowerCase();
       const response = interaction.options.getString('response').toLowerCase();
 
-      const data = await schema.findOne({ guildId: interaction.guild.id });
+      const data = await schema.findOne({ guildId });
 
       if (!data) {
         await schema.create({
-          guildId: interaction.guild.id,
+          guildId,
           autoresponses: [
             {
               trigger,
@@ -75,7 +76,7 @@ module.exports = {
         }
 
         await schema.findOneAndUpdate(
-          { guildId: interaction.guild.id },
+          { guildId },
           { $push: { autoresponses: { trigger, response } } }
         );
       }
@@ -91,7 +92,7 @@ module.exports = {
       const trigger = interaction.options.getString('trigger').toLowerCase();
 
       const data = await schema.findOneAndUpdate(
-        { guildId: interaction.guild.id },
+        { guildId },
         { $pull: { autoresponses: { trigger } } },
         { new: true }
       );
@@ -107,7 +108,7 @@ module.exports = {
       await interaction.reply({ embeds: [embed] });
 
     } else if (subcommand === 'list') {
-      const data = await schema.findOne({ guildId: interaction.guild.id });
+      const data = await schema.findOne({ guildId });
 
       if (!data || !data.autoresponses || data.autoresponses.length === 0) {
         const embed = new EmbedBuilder()
@@ -130,7 +131,7 @@ module.exports = {
       await interaction.reply({ embeds: [embed] });
 
     } else if (subcommand === 'remove-all') {
-      const data = await schema.findOne({ guildId: interaction.guild.id });
+      const data = await schema.findOne({ guildId });
 
       if (!data) {
         const embed = new EmbedBuilder()
@@ -138,7 +139,7 @@ module.exports = {
         return interaction.reply({ embeds: [embed], ephemeral: true });
       }
 
-      await schema.deleteMany({ guildId: interaction.guild.id });
+      await schema.deleteMany({ guildId });
 
       const embed = new EmbedBuilder()
         .setDescription('Successfully deleted all responses.');
