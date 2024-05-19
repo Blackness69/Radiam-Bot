@@ -6,6 +6,15 @@ module.exports = {
   name: 'kick',
   description: 'Kick a user from the server',
   execute({ args, msg }) {
+
+    if (!msg.member.permissions.has(PermissionsBitField.Flags.KickMembers)) {
+      return msg.reply('❌ | You do not have permission to kick users.');
+    }
+
+    if (!msg.guild.members.me.permissions.has(PermissionsBitField.Flags.KickMembers)) {
+    return msg.reply("❌ | I don't have permission to kick users.");
+    }
+    
     let user;
 
     // Check if the first argument is a mention
@@ -30,9 +39,9 @@ module.exports = {
 
     if (!member) return msg.reply('That user is not in this server!');
 
-    if (!msg.member.permissions.has(PermissionsBitField.Flags.KickMembers)) return msg.reply("You don't have the necessary permission to use that command!");
-
-    if (!member.kickable) return msg.reply("I can't kick that user!");
+    
+    if (!member.kickable) return msg.reply("❌ | I cannot kick this user!\nPossibilities:\nMy role position is not above the user role position.\nI don't have necessary permissions to kick users.");
+    
     if (msg.guild.ownerId === member.id) return msg.reply("You can't kick the server owner!");
     if (msg.author.id === member.id) return msg.reply("You can't kick yourself!");
 

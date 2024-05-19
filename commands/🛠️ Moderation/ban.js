@@ -9,9 +9,13 @@ module.exports = {
     try {
       // Check if the user has the necessary permissions
       if (!msg.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-        return msg.reply("❌ | You don't have permissions to ban members!");
+        return msg.reply("❌ | You don't have permissions to ban users.");
       }
 
+      if (!msg.guild.members.me.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+        return msg.reply("❌ | I don't have permission to ban users.");
+      }
+      
       // Check if args[0] exists
       if (!args[0]) {
         return msg.reply('Please provide a valid user by @mention, username, or user ID.');
@@ -46,7 +50,7 @@ module.exports = {
       const reason = args.slice(1).join(' ') || 'No reason provided';
 
       if (!user.bannable) {
-        return msg.reply("❌ | I cannot ban this user!\nPossibility: The user has a higher role than me.");
+        return msg.reply("❌ | I cannot ban this user!\nPossibilities:\nMy role position is not above the user role position.\nI don't have necessary permissions to ban users.");
       }
 
       // Ban the user

@@ -8,13 +8,18 @@ module.exports = {
   async execute({ msg, args }) {
     // Check if the user has the necessary permissions
     if (!msg.member.permissions.has(PermissionsBitField.Flags.BanMembers)) {
-      return msg.reply('❌ | You do not have permission to unban members.');
+      return msg.reply('❌ | You do not have permission to unban users.');
+    }
+
+    // Check if the bot has the necessary permissions
+    if (!msg.guild.members.me.permissions.has(PermissionsBitField.Flags.BanMembers)) {
+      return msg.reply("❌ | I don't have permission to unban users.");
     }
 
     // Check if a user ID or username was provided
     let user = args[0];
     if (!user) {
-      return msg.reply('❌ | Please provide a valid ID or username of a banned user to unban');
+      return msg.reply('❌ | Please provide a valid ID or username of a banned user to unban.');
     }
 
     // Check if the user is mentioned
@@ -24,7 +29,7 @@ module.exports = {
 
       // Check if the extracted value is a valid user ID
       if (isNaN(user)) {
-        return msg.reply('❌ | Please provide a valid ID or username of a banned user to unban');
+        return msg.reply('❌ | Please provide a valid ID or username of a banned user to unban.');
       }
     }
 
