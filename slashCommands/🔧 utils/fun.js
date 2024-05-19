@@ -49,7 +49,7 @@ module.exports = {
       const inputText = options.getString('text');
       const emojifiedText = emojifyText(inputText);
       await interaction.reply(emojifiedText);
-    } else if (subcommand === 'boldfancy') {
+    } else if (subcommand === 'boldtext') {
       const inputText = options.getString('text');
       const boldFancyText = toBoldFancy(inputText);
       await interaction.reply(boldFancyText);
@@ -82,9 +82,9 @@ function emojifyText(text) {
 
   return text.split('').map(char => {
     if (emojiAlphabet[char.toLowerCase()]) {
-      return emojiAlphabet[char.toLowerCase()];
+      return emojiAlphabet[char.toLowerCase()] + ' ';
     } else if (!isNaN(char)) {
-      return emojiNumbers[char];
+      return emojiNumbers[char] + ' ';
     } else {
       return char;
     }
