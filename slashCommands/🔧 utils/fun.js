@@ -2,18 +2,28 @@ const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-  .setName('smallcaps')
-  .setDescription('ᴍᴀᴋᴇ ᴛʜᴇ ᴛᴇxᴛ ʟᴏᴏᴋ ʟɪᴋᴇ ᴛʜɪs.')
-  .addStringOption(option => {
-    return option
-      .setName('text')
-      .setDescription('the text you want to make smallcaps.')
-      .setRequired(true)
+  .setName('fun')
+  .setDescription('Fun Commanda')
+  .addSubcommand(subcommand => {
+    return subcommand
+    .setName('smallcaps')
+    .setDescription('ᴍᴀᴋᴇ ᴛʜᴇ ᴛᴇxᴛ ʟᴏᴏᴋ ʟɪᴋᴇ ᴛʜɪs.')
+    .addStringOption(option => {
+      return option
+        .setName('text')
+        .setDescription('the text you want to make smallcaps.')
+        .setRequired(true)
+    })
   }),
   async execute({interaction}) {
+    const { options } = interaction;
+    const subcommand = options.getSubcommand();
+
+    if (subcommand === 'smallcaps') {
     const inputText = interaction.options.getString('text');
     const smallCapsText = toSmallCaps(inputText);
     await interaction.reply(smallCapsText);
+    }
   }
 }
 

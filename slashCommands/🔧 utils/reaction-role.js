@@ -93,8 +93,8 @@ module.exports = {
         } else {
           await reactions.deleteMany({ guildId: guild.id, messageId: message.id, Emoji: emoji });
           const embed = new EmbedBuilder()
-          .setDescription(`I have removed reaction role from ${message.url} wih ${emoji}`)
-
+          .setDescription(`I have removed reaction role from ${message.url} for the emoji ${emoji}`)
+          .setColor('#A020F0')
           await interaction.reply({ embeds: [embed] });
         }
     }

@@ -84,6 +84,7 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle('AutoResponse Created')
         .setDescription(`Trigger: ${trigger}\nResponse: ${response}`)
+        .setColor('#A020F0')
         .setTimestamp();
 
       await interaction.reply({ embeds: [embed] });
@@ -94,7 +95,8 @@ module.exports = {
       const data = await schema.findOne({ guildId });
       if (!data) {
         const embed = new EmbedBuilder()
-          .setDescription('I couldn\'t find an auto response with that trigger.');
+          .setDescription('I couldn\'t find an auto response with that trigger.')
+          .setColor('#A020F0');
         return interaction.reply({ embeds: [embed], ephemeral: true });
       }
 
@@ -108,12 +110,14 @@ module.exports = {
       const updatedData = await schema.findOne({ guildId });
       if (updatedData.autoresponses.length === initialCount) {
         const embed = new EmbedBuilder()
-          .setDescription('I couldn\'t find an auto response with that trigger.');
+          .setDescription('I couldn\'t find an auto response with that trigger.')
+          .setColor('#A020F0');
         return interaction.reply({ embeds: [embed], ephemeral: true });
       }
 
       const embed = new EmbedBuilder()
-        .setDescription(`Deleted auto response with trigger: ${trigger}`);
+        .setDescription(`Deleted auto response with trigger: ${trigger}`)
+        .setColor('#A020F0');
       await interaction.reply({ embeds: [embed] });
 
     } else if (subcommand === 'list') {
@@ -122,13 +126,15 @@ module.exports = {
       if (!data || !data.autoresponses || data.autoresponses.length === 0) {
         const embed = new EmbedBuilder()
           .setTitle('AutoResponse List')
-          .setDescription('No autoresponses found.');
+          .setDescription('No autoresponses found.')
+          .setColor('#A020F0');
         return interaction.reply({ embeds: [embed] });
       }
 
       const embed = new EmbedBuilder()
         .setTitle('AutoResponse List')
-        .setDescription('List of all autoresponses.');
+        .setDescription('List of all autoresponses.')
+        .setColor('#A020F0');
 
       data.autoresponses.forEach((autoresponse, index) => {
         embed.addFields({
@@ -144,14 +150,16 @@ module.exports = {
 
       if (!data) {
         const embed = new EmbedBuilder()
-          .setDescription('No Autoresponder Found.');
+          .setDescription('No Autoresponder Found.')
+          .setColor('#A020F0');
         return interaction.reply({ embeds: [embed], ephemeral: true });
       }
 
       await schema.deleteMany({ guildId });
 
       const embed = new EmbedBuilder()
-        .setDescription('Successfully deleted all responses.');
+        .setDescription('Successfully deleted all responses.')
+        .setColor('#A020F0');
       await interaction.reply({ embeds: [embed] });
     }
   }
