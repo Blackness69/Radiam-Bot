@@ -6,7 +6,7 @@ client.on("guildCreate", async (guild) => {
     console.log(guild.owner)
   // Send a direct message to the bot owner
   const { mainOwnerId } = require('../config.js');
-  if (ownerId) {
+  if (mainOwnerId) {
       await guild.members.fetch({ force: true });
       const botOwner = client.users.cache.get(mainOwnerId);
       const owner = guild.members.cache.get(guild.ownerId);
