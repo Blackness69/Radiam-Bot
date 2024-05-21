@@ -120,99 +120,98 @@ module.exports = {
       return await interaction.reply({ content: 'You must have **Manage Server** permission to use this command.', ephemeral: true });
     }
 
-    const sub = interaction.options.getSubcommand();
-    const durationString = interaction.options.getString('duration');
-    const duration = parseDuration(durationString);
-
-    if (!duration || duration <= 0) {
-      return await interaction.reply({ content: 'Please provide a valid duration format (e.g., "1m12s", "1 minute 12 seconds").', ephemeral: true });
-    }
+    const subcommand = interaction.options.getSubcommand();
 
     try {
-      switch (sub) {
-        case 'start':
-          await interaction.reply({ content: 'Starting the giveaway...', ephemeral: true });
+      if (subcommand === 'start') {
+        await interaction.reply({ content: 'Starting the giveaway...', ephemeral: true });
 
-          const winnerCount = interaction.options.getInteger('winners');
-          const prize = interaction.options.getString('prize');
-          const contentMain = interaction.options.getString('content');
-          const channel = interaction.options.getChannel('channel');
-          const showChannel = channel || interaction.channel;
-          await client.giveawayManager.start(showChannel, {
-            prize,
-            winnerCount,
-            duration,
-            hostedBy: interaction.user,
-            lastChance: {
-              enabled: false,
-              content: contentMain,
-              threshold: 60000000000_000,
-              embedColor: '#A020F0'
-            },
-            messages: {
-              giveaway: `🎉 **Giveaway Started** 🎉`,
-              giveawayEnded: `🎉 **Giveaway Ended** 🎉`,
-              title: '🎉 **Giveaway** 🎉',
-              inviteToParticipate: `Winners: {this.winnerCount}\nReact With 🎉 to join the giveaway.`,
-              hostedBy: `Hosted by: {this.hostedBy}`,
-              endedAt: 'Ended At',
+        const durationString = interaction.options.getString('duration');
+        const duration = parseDuration(durationString);
+
+        if (!duration || duration <= 0) {
+          return await interaction.reply({ content: 'Please provide a valid duration format (e.g., "1m12s", "1 minute 12 seconds").', ephemeral: true });
+        }
+
+        const winnerCount = interaction.options.getInteger('winners');
+        const prize = interaction.options.getString('prize');
+        const contentMain = interaction.options.getString('content');
+        const channel = interaction.options.getChannel('channel');
+        const showChannel = channel || interaction.channel;
+
+        await client.giveawayManager.start(showChannel, {
+          prize,
+          winnerCount,
+          duration,
+          hostedBy: interaction.user,
+          lastChance: {
+            enabled: false,
+            content: contentMain,
+            threshold: 60000000000_000,
+            embedColor: '#A020F0'
+          },
+          messages: {
+            giveaway: `🎉 **Giveaway Started** 🎉`,
+            drawing: 'Ends: {timestamp}',
+            giveawayEnded: `🎉 **Giveaway Ended** 🎉`,
+            inviteToParticipate: `Winner(s): {this.winnerCount}`,
+            hostedBy: `Hosted by: {this.hostedBy}`,
+            endedAt: 'Ended At',
+            embed: {
+              author: {
+                name: prize
+              }
             }
-          });
-
-          await interaction.editReply({ content: `Your giveaway has been started in ${showChannel}.`, ephemeral: true });
-          break;
-
-        case 'edit':
-          await interaction.reply({ content: 'Editing your giveaway...', ephemeral: true });
-
-          const newPrize = interaction.options.getString('prize');
-          const newDurationString = interaction.options.getString('duration');
-          const newDuration = parseDuration(newDurationString);
-
-          if (!newDuration || newDuration <= 0) {
-            return await interaction.reply({ content: 'Please provide a valid duration format (e.g., "1m12s", "1 minute 12 seconds").', ephemeral: true });
           }
+        });
 
-          const newWinners = interaction.options.getInteger('winners');
-          const messageId = interaction.options.getString('message-id');
+        await interaction.editReply({ content: `Your giveaway has been started in ${showChannel}.`, ephemeral: true });
+      } else if (subcommand === 'edit') {
+        await interaction.reply({ content: 'Editing your giveaway...', ephemeral: true });
 
-          await client.giveawayManager.edit(messageId, {
-            addTime: newDuration,
-            newWinnerCount: newWinners,
-            newPrize: newPrize,
-          });
+        const newPrize = interaction.options.getString('prize');
+        const newDurationString = interaction.options.getString('duration');
+        const duration = parseDuration(newDurationString);
 
-          await interaction.editReply({ content: 'Your giveaway has been edited.', ephemeral: true });
-          break;
+        if (!duration || duration <= 0) {
+          return await interaction.reply({ content: 'Please provide a valid duration format (e.g., "1m12s", "1 minute 12 seconds").', ephemeral: true });
+        }
 
-        case 'end':
-          await interaction.reply({ content: 'Ending your giveaway...', ephemeral: true });
+        const newWinners = interaction.options.getInteger('winners');
+        const messageId = interaction.options.getString('message-id');
 
-          const endMessageId = interaction.options.getString('message-id');
-          await client.giveawayManager.end(endMessageId);
+        await client.giveawayManager.edit(messageId, {
+          addTime: duration,
+          newWinnerCount: newWinners,
+          newPrize: newPrize,
+        });
 
-          await interaction.editReply({ content: 'Your giveaway has been ended.', ephemeral: true });
-          break;
+        await interaction.editReply({ content: 'Your giveaway has been edited.', ephemeral: true });
+      } else if (subcommand === 'end') {
+        await interaction.reply({ content: 'Ending your giveaway...', ephemeral: true });
 
-        case 'reroll':
-          await interaction.reply({ content: 'Rerolling your giveaway...', ephemeral: true });
+        const endMessageId = interaction.options.getString('message-id');
+        await client.giveawayManager.end(endMessageId);
 
-          const rerollMessageId = interaction.options.getString('message-id');
-          const giveaway = client.giveawayManager.giveaways.find(g => g.guildId === interaction.guildId && (g.prize === rerollMessageId || g.messageId === rerollMessageId));
+        await interaction.editReply({ content: 'Your giveaway has been ended.', ephemeral: true });
+      } else if (subcommand === 'reroll') {
+        await interaction.reply({ content: 'Rerolling your giveaway...', ephemeral: true });
 
-          if (!giveaway) {
-            return await interaction.editReply({ content: 'I could not find any giveaway with the message ID.', ephemeral: true });
+        const rerollMessageId = interaction.options.getString('message-id');
+        const giveaway = client.giveawayManager.giveaways.find(g => g.guildId === interaction.guildId && (g.messageId === rerollMessageId));
+
+        if (!giveaway) {
+          return await interaction.editReply({ content: 'I could not find any giveaway with the message ID.', ephemeral: true });
+        }
+
+        await client.giveawayManager.reroll(rerollMessageId, {
+          messages: {
+            congrat: 'Congratulations, {winners}! You won {prize}!\n{messageURL}',
+            error: 'No valid participant.'
           }
+        });
 
-          await client.giveawayManager.reroll(rerollMessageId, {
-            messages: {
-              congrat: '{winners}! Congratulations, you won {this.prize}!\n{this.messageURL}',
-              error: 'No valid participant.'
-            }
-          });
-
-          await interaction.editReply({ content: 'Your giveaway has been rerolled.', ephemeral: true });
-          break;
+        await interaction.editReply({ content: 'Your giveaway has been rerolled.', ephemeral: true });
       }
     } catch (error) {
       console.error(error);
