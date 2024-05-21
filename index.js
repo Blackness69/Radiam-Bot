@@ -73,6 +73,24 @@ for (const file of tableFiles) {
  client.on("ready", require(`./tables/${file}`));
 }
 
+// Giveaway System index.js
+
+const GiveawaysManager = require('./giveaways');
+client.giveawayManager = new GiveawaysManager(client, {
+
+    default: {
+
+        botsCanWin: false,
+
+        embedColor: `#A020F0`,
+
+        embedColorEnd: `#A020F0`,
+
+        reaction: `🎉`,
+
+    },
+
+}); 
 
 
 client.login(token);
