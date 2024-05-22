@@ -52,7 +52,7 @@ module.exports = {
             .then(emoji => {
                 const embed = new EmbedBuilder()
                     .setColor('#A020F0')
-                    .setDescription(`Added **successfully** ${emoji}, with name: **${name}**.`)
+                    .setDescription(`Added ${emoji} **successfully**, with the name: **${name}**.`)
 
                 interaction.reply({ embeds: [embed] }).catch(err => {
                     interaction.reply({ content: "Your limit of emojis has run out. Remove some of the emojis from the server and try again!", ephemeral: true })
