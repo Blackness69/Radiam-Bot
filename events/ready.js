@@ -5,6 +5,7 @@ var table = new AsciiTable();
 table.setHeading('Mongo Database', 'Stats').setBorder('|', '=', "0", "0");
 const mongoose = require('mongoose');
 const { mongoURL } = require('../config.js');
+const { AutoPoster } = require('topgg-autoposter');
 const client = require(process.cwd() + '/index.js')
 
 client.on("ready", async (client) => {
@@ -37,4 +38,13 @@ client.on("ready", async (client) => {
       console.log(colors.red(`Client not found`));
     console.log(colors.red('0===========================0'));
   }
+  const ap = AutoPoster("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzM2OTgyNjg1ODQ4NzAwMTAiLCJib3QiOnRydWUsImlhdCI6MTcxNjM2NjU1N30.92K9PMOQn_8p2nfntNEtK5SC7RPuMc1IIF7uDPd6hKI", client);
+
+  ap.on('posted', () => {
+    console.log('Stats posted on top.gg');
+  })
+
+  ap.on('error', () => {
+    console.log('An error occured while posting stats on top.gg');
+  })
 }); 
