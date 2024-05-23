@@ -1,4 +1,5 @@
 // leaveSchema.js
+
 const { model, Schema } = require('mongoose');
 
 const leaveSchema = new Schema({
@@ -7,7 +8,10 @@ const leaveSchema = new Schema({
     channelId: String,
     embedColor: String,
     embedTitle: String,
-    embedOption: String
+    embedOption: String,
+    thumbnailUrl: String,
+    bannerUrl: String,
+    footerText: String
 });
 
 module.exports = model('leaveSystem', leaveSchema);
