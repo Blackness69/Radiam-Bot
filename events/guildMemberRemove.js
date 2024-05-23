@@ -26,9 +26,15 @@ client.on("guildMemberRemove", async (member) => {
         .replace(/{guildName}/g, member.guild.name)
         .replace(/{memberCount}/g, `${guild.memberCount}`);
 
+    let titleToPut = embedTitle
+    .replace(/{userMention}/g, `<@${member.id}>`)
+    .replace(/{userName}/g, member.user.username)
+    .replace(/{guildName}/g, member.guild.name)
+    .replace(/{memberCount}/g, `${guild.memberCount}`);
+    
     if (embedOption) {
         const embed = new EmbedBuilder()
-            .setTitle(embedTitle || 'Good Bye🥀')
+            .setTitle(titleToPut || 'Good Bye🥀')
             .setDescription(messageToSend)
             .setColor(embedColor || '#A020F0');
 
