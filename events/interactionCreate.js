@@ -5,6 +5,8 @@ const client = require(process.cwd() + '/index.js')
 
 client.on("interactionCreate", async (interaction) => {
   // Add interaction create event handling logic here
+  if (!interaction.guild) return;
+  
   const commandName = interaction.commandName;
   if(!client.slashCommands) return;
   const slashCommand = client.slashCommands.get(commandName);
