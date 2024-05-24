@@ -1,5 +1,3 @@
-// welcomeSchema.js
-
 const { model, Schema } = require('mongoose');
 
 const welcomeSchema = new Schema({

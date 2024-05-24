@@ -1,5 +1,3 @@
-// guildMemberRemove.js
-
 const leaveSchema = require('../Schemas/utils/leaveSchema');
 const { EmbedBuilder } = require('discord.js');
 const client = require(process.cwd() + '/index.js');

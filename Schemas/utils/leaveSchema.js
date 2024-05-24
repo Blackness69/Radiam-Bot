@@ -1,5 +1,3 @@
-// leaveSchema.js
-
 const { model, Schema } = require('mongoose');
 
 const leaveSchema = new Schema({

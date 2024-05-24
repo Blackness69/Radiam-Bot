@@ -1,5 +1,3 @@
-// guildMemberAdd.js
-
 const welcomeSchema = require('../Schemas/utils/welcomeSchema');
 const { EmbedBuilder } = require('discord.js');
 const client = require(process.cwd() + '/index.js');
@@ -17,7 +15,7 @@ client.on("guildMemberAdd", async (member) => {
     const thumbnailUrl = data.thumbnailUrl;
     const bannerUrl = data.bannerUrl;
     const footerTxt = data.footerText;
-    
+
     const guild = member.guild;
     const channel = guild.channels.cache.get(channelId);
     await guild.members.fetch();
@@ -56,4 +54,4 @@ client.on("guildMemberAdd", async (member) => {
     } else {
         channel.send(messageToSend);
     }
-}); 
+});;
