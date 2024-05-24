@@ -1,15 +1,14 @@
-const { EmbedBuilder, PermissionsBitField } = require("discord.js");
-const os = require("os");
-const moment = require("moment");
-const cpuStat = require("cpu-stat");
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const os = require('os');
+const moment = require('moment');
+const cpuStat = require('cpu-stat');
 
 module.exports = {
-  usage: 'r.botinfo',
-  name: "botinfo",
-  description: "Shows some information about the bot.",
-  async execute({ client, msg }) {
+  data: new SlashCommandBuilder()
+    .setName('botinfo')
+    .setDescription('Shows some information about the bot.'),
+  async execute({interaction, client}) {
     // uptime of bot
-
     const days = Math.floor(client.uptime / 86400000);
     const hours = Math.floor((client.uptime / 3600000) % 24);
     const minutes = Math.floor((client.uptime / 60000) % 60);
@@ -31,18 +30,18 @@ module.exports = {
       const CPU = percent.toFixed(2);
       const CPUModel = os.cpus()[0].model;
       const cores = os.cpus().length;
-      
+
       const botinfoEmbed = new EmbedBuilder()
         .setAuthor({
-          name: "Bot info",
+          name: 'Bot info',
           iconURL: client.user.displayAvatarURL({ dynamic: true }),
         })
         .setThumbnail(client.user.displayAvatarURL({ dynamic: true }))
         .setFooter({
           text: `Made with 💞 by Slayerz Blackness`,
-          iconURL: msg.author.displayAvatarURL({ dynamic: true }),
+          iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
         })
-        .setColor("#A020F0")
+        .setColor('#A020F0')
         .addFields(
           {
             name: `**Bot Name:**`,
@@ -53,12 +52,12 @@ module.exports = {
           { name: `\u200B`, value: `\u200B`, inline: true }, // We Will This As Empty So It Won't Look Messed Up In Embed
           {
             name: `**Bot Created At:**`,
-            value: `${moment.utc(client.user.createdAt).format("LLLL")}`,
+            value: `${moment.utc(client.user.createdAt).format('LLLL')}`,
             inline: true,
           },
           {
             name: `**Bot Joined At:**`,
-            value: `${moment.utc(client.joinedAt).format("LLLL")}`,
+            value: `${moment.utc(client.joinedAt).format('LLLL')}`,
             inline: true,
           },
           { name: `\u200B`, value: `\u200B`, inline: true }, // We Will This As Empty So It Won't Look Messed Up In Embed
@@ -84,7 +83,7 @@ module.exports = {
           },
           {
             name: `**Ping:**`,
-            value: `API Latency: **${client.ws.ping}**ms\nClient Ping: **${Date.now() - msg.createdTimestamp}**ms`,
+            value: `API Latency: **${client.ws.ping}**ms\nClient Ping: **${Date.now() - interaction.createdTimestamp}**ms`,
             inline: true,
           },
           { name: `\u200B`, value: `\u200B`, inline: true }, // We Will This As Empty So It Won't Look Messed Up In Embed
@@ -94,16 +93,16 @@ module.exports = {
           { name: `**CPU Model:**`, value: `${CPUModel}`, inline: true },
           { name: `**Cores:**`, value: `${cores}`, inline: true },
         );
-      msg.reply({ embeds: [botinfoEmbed] });
+      interaction.reply({ embeds: [botinfoEmbed] });
     });
 
     function formatBytes(a, b) {
       let c = 1024; // 1GB = 1024MB
       d = b || 2;
-      e = ["B", "KB", "MB", "GB", "TB"];
+      e = ['B', 'KB', 'MB', 'GB', 'TB'];
       f = Math.floor(Math.log(a) / Math.log(c));
 
-      return parseFloat((a / Math.pow(c, f)).toFixed(d)) + " " + e[f];
+      return parseFloat((a / Math.pow(c, f)).toFixed(d)) + ' ' + e[f];
     }
   },
 };
