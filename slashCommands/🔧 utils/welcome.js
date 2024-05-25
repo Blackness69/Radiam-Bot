@@ -89,8 +89,10 @@ module.exports = {
         }
 
         if (subcommand === 'setup') {
+            await interaction.deferReply({ ephemeral: true });
+
             const options = interaction.options;
-            if (!options) return interaction.reply({ content: "No options provided.", ephemeral: true });
+            if (!options) return interaction.editReply({ content: "No options provided." });
 
             const welcomeMessage = options.getString('message');
             const channelId = options.getChannel('channel').id;
@@ -103,17 +105,21 @@ module.exports = {
             const bannerUrl = options.getString('banner');
             const footerText = options.getString('footer');
 
-            // Check if URLs are valid
-            const isValidUrl = (url) => {
-                return axios.get(url).then(() => true).catch(() => false);
+            const isValidUrl = async (url) => {
+                try {
+                    await axios.get(url);
+                    return true;
+                } catch {
+                    return false;
+                }
             };
 
             if (thumbnailUrl && !await isValidUrl(thumbnailUrl)) {
-                return interaction.reply({ content: "Invalid thumbnail URL provided.", ephemeral: true });
+                return interaction.editReply({ content: "Invalid thumbnail URL provided." });
             }
 
             if (bannerUrl && !await isValidUrl(bannerUrl)) {
-                return interaction.reply({ content: "Invalid banner URL provided.", ephemeral: true });
+                return interaction.editReply({ content: "Invalid banner URL provided." });
             }
 
             let data = await welcomeSchema.findOne({ guildId: guildId });
@@ -142,10 +148,12 @@ module.exports = {
                 });
             }
 
-            await interaction.reply(`Welcome message set successfully!\nCustom message: ${welcomeMessage}\nWelcome message will be sent in <#${channelId}>`);
+            await interaction.editReply(`Welcome message set successfully!\nCustom message: ${welcomeMessage}\nWelcome message will be sent in <#${channelId}>`);
         } else if (subcommand === 'disable') {
+            await interaction.deferReply({ ephemeral: true });
+
             await welcomeSchema.findOneAndDelete({ guildId: interaction.guild.id });
-            await interaction.reply('Welcome system disabled successfully!');
+            await interaction.editReply('Welcome system disabled successfully!');
         } else if (subcommand === 'variables') {
             const variablesEmbed = new EmbedBuilder()
                 .setTitle('Variables for Custom Welcome Message')

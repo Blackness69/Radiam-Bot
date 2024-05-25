@@ -54,4 +54,4 @@ client.on("guildMemberAdd", async (member) => {
     } else {
         channel.send(messageToSend);
     }
-});;
+});
