@@ -89,8 +89,9 @@ module.exports = {
         }
 
         if (subcommand === 'setup') {
+            await interaction.deferReply({ ephemeral: true });
             const options = interaction.options;
-            if (!options) return interaction.reply({ content: "No options provided.", ephemeral: true });
+            if (!options) return interaction.editReply({ content: "No options provided.", ephemeral: true });
 
             const leaveMessage = options.getString('message');
             const channelId = options.getChannel('channel').id;
@@ -104,16 +105,21 @@ module.exports = {
             const footerText = options.getString('footer');
 
             // Check if URLs are valid
-            const isValidUrl = (url) => {
-                return axios.get(url).then(() => true).catch(() => false);
-            };
+                const isValidUrl = async (url) => {
+                    try {
+                        await axios.get(url);
+                        return true;
+                    } catch {
+                        return false;
+                    }
+                };
 
-            if (thumbnailUrl && !await isValidUrl(thumbnailUrl)) {
-                return interaction.reply({ content: "Invalid thumbnail URL provided.", ephemeral: true });
-            }
+                if (thumbnailUrl && !await isValidUrl(thumbnailUrl)) {
+                    return interaction.editReply({ content: "Invalid thumbnail URL provided." });
+                }
 
-            if (bannerUrl && !await isValidUrl(bannerUrl)) {
-                return interaction.reply({ content: "Invalid banner URL provided.", ephemeral: true });
+                if (bannerUrl && !await isValidUrl(bannerUrl)) {
+                    return interaction.editReply({ content: "Invalid banner URL provided." });
             }
 
             let data = await leaveSchema.findOne({ guildId: guildId });
@@ -142,11 +148,13 @@ module.exports = {
                 });
             }
 
-            await interaction.reply(`Leave message set successfully!\nCustom message: ${leaveMessage}\nLeave message will be sent in <#${channelId}>`);
+            await interaction.editReply(`Leave message set successfully!\nCustom message: ${leaveMessage}\nLeave message will be sent in <#${channelId}>`);
         } else if (subcommand === 'disable') {
+            await interaction.deferReply({ ephemeral: true }); 
             await leaveSchema.findOneAndDelete({ guildId: interaction.guild.id });
-            await interaction.reply('Leave system disabled successfully!');
+            await interaction.editReply('Leave system disabled successfully!');
         } else if (subcommand === 'variables') {
+            await interaction.deferReply({ ephemeral: true });
             const variablesEmbed = new EmbedBuilder()
                 .setTitle('Variables for Custom Leave Message')
                 .setDescription('Here are the variables that can be used in the custom leave message:')
@@ -158,7 +166,7 @@ module.exports = {
                 )
                 .setColor('#A020F0');
 
-            await interaction.reply({ embeds: [variablesEmbed], ephemeral: true });
+            await interaction.editReply({ embeds: [variablesEmbed], ephemeral: true });
         }
     }
 };
