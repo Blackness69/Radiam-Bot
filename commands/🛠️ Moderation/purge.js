@@ -6,9 +6,13 @@ module.exports = {
   description: 'Delete a specified number of messages (between 1 and 100), or all messages if "purge all" is specified.',
   async execute({msg, args}) {
     if (!msg.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
-      return msg.reply('You need the ``ManageMessages`` permission to use this command.');
+      return msg.reply('❌ | You need the ``ManageMessages`` permission to use this command.');
     }
 
+    if (!msg.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
+      return msg.reply("❌ | I need the ``ManageMessages`` permission to use this command.");
+    }
+    
     let amount;
     if (args[0] && args[0].toLowerCase() === 'all') {
       amount = 100;

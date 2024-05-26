@@ -6,7 +6,7 @@ module.exports = {
     description: 'Unlocks the current channel',
     async execute({ msg }) {
         if (!msg.member.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
-            return msg.reply("You don't have permission to manage channels.");
+            return msg.reply("❌ | You don't have permission to manage channels.");
         }
 
         if (!msg.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
