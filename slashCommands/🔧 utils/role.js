@@ -1,4 +1,4 @@
-const { PermissionsBitField, SlashCommandBuilder } = require('discord.js');
+const { PermissionsBitField, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -17,30 +17,40 @@ module.exports = {
         .setDescription('Remove a role from a user')
         .addUserOption(option => option.setName('user').setDescription('The user to remove the role from').setRequired(true))
         .addRoleOption(option => option.setName('role').setDescription('The role to remove from the user').setRequired(true))
+    )
+    .addSubcommand(subcommand =>
+      subcommand
+        .setName('addall')
+        .setDescription('Add a role to everyone in the guild')
+        .addRoleOption(option => option.setName('role').setDescription('The role to add to everyone').setRequired(true))
+    )
+    .addSubcommand(subcommand => 
+      subcommand
+        .setName('removeall')
+        .setDescription('Remove a role from everyone in the guild')
+        .addRoleOption(option => option.setName('role').setDescription('The role to remove from everyone').setRequired(true))
     ),
 
-  async execute({interaction}) {
+  async execute({ interaction }) {
     const subcommand = interaction.options.getSubcommand();
-    
+    const role = interaction.options.getRole('role');
+
     if (!interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageRoles)) {
       return interaction.reply({ content: '❌ | I do not have permission to manage roles.', ephemeral: true });
     }
 
     if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageRoles)) {
-      return interaction.reply({ content: '❌ | you do not have permission to manage roles.', ephemeral: true });
+      return interaction.reply({ content: '❌ | You do not have permission to manage roles.', ephemeral: true });
     }
-    
+
+    if (role.position >= interaction.guild.members.me.roles.highest.position) {
+      return interaction.reply({ content: '❌ | I could not manage the role as that role is above me in the server hierarchy.', ephemeral: true });
+    }
 
     if (subcommand === 'add') {
-
       const user = interaction.options.getUser('user');
-      const role = interaction.options.getRole('role');
       const member = interaction.guild.members.cache.get(user.id);
-      
-      if (role.position >= interaction.guild.members.me.roles.highest.position) {
-        return interaction.reply({ content: '❌ | I could not add role as that role is above me in the server hierarchy.', ephemeral: true });
-      }
-      
+
       if (member.roles.cache.has(role.id)) {
         return interaction.reply({ content: '❌ | This user already has that role.', ephemeral: true });
       }
@@ -54,15 +64,9 @@ module.exports = {
     }
 
     if (subcommand === 'remove') {
-
       const user = interaction.options.getUser('user');
-      const role = interaction.options.getRole('role');
       const member = interaction.guild.members.cache.get(user.id);
 
-      if (role.position >= interaction.guild.members.me.roles.highest.position) {
-        return interaction.reply({ content: '❌ | I could not remove role as that role is above me in the server hierarchy.', ephemeral: true });
-      }
-      
       if (!member.roles.cache.has(role.id)) {
         return interaction.reply({ content: '❌ | This user does not have that role.', ephemeral: true });
       }
@@ -73,6 +77,56 @@ module.exports = {
       });
 
       return interaction.reply({ content: `✅ | Successfully removed the role <@&${role.id}> from ${user.tag}.`, ephemeral: true });
+    }
+
+    if (subcommand === 'addall') {
+      const embed = new EmbedBuilder()
+        .setDescription(`Giving the role <@&${role.id}> to everyone in this guild...`)
+        .setColor('#A020F0')
+        .setTimestamp();
+
+      const initialMessage = await interaction.reply({ embeds: [embed], fetchReply: true });
+
+      const members = await interaction.guild.members.fetch();
+      const promises = members.map(async member => {
+        if (!member.roles.cache.has(role.id)) {
+          await member.roles.add(role).catch(console.error);
+        }
+      });
+
+      await Promise.all(promises);
+
+      const embed2 = new EmbedBuilder()
+        .setDescription(`✅ | Successfully given the role <@&${role.id}> to everyone in this guild.`)
+        .setColor('#A020F0')
+        .setTimestamp();
+
+      await initialMessage.edit({ embeds: [embed2] });
+    }
+
+    if (subcommand === 'removeall') {
+      const embed = new EmbedBuilder()
+        .setDescription(`Removing the role <@&${role.id}> from everyone in this guild...`)
+        .setColor('#A020F0')
+        .setTimestamp();
+
+      const initialMessage = await interaction.reply({ embeds: [embed], fetchReply: true });
+
+      const members = await interaction.guild.members.fetch();
+      const promises = members.map(async member => {
+        if (member.roles.cache.has(role.id)) {
+          await member.roles.remove(role).catch(console.error);
+        }
+      });
+
+      await Promise.all(promises);
+
+      const embed2 = new EmbedBuilder()
+        .setDescription(`✅ | Successfully removed the role <@&${role.id}> from everyone in this guild.`)
+        .setColor('#A020F0')
+        .setTimestamp();
+
+      await initialMessage.edit({ embeds: [embed2] });
     }
   },
 };
