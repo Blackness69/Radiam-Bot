@@ -20,9 +20,6 @@ module.exports = {
       return msg.reply('You do not have admin permission to use this command.');
     }
 
-    if (bannedPrefix.some(prefix => newPrefix.includes(prefix))) {
-      return msg.reply('This prefix is unavailable, we are working on it to make it available.');
-    } 
     
     try {
       

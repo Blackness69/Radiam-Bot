@@ -8,7 +8,9 @@ module.exports = {
   async execute({ msg }) {
     try {
       // Check if an opponent was mentioned
-      const opponent = msg.mentions.members.first();
+      const replacedArg = args[0].replace(/[<@!>]/g, '');
+      const opponent = msg.guild.members.cache.get(replacedArg);
+      
       if (!opponent || opponent.user.bot || opponent.id === msg.author.id) {
         return msg.reply('Please mention a valid opponent (a user, not a bot, and not yourself) to start a Rock Paper Scissors game.');
       }

@@ -22,7 +22,8 @@ module.exports = {
       }
 
       // Check if a user was mentioned
-      let user = msg.mentions.members.first();
+      const replacedArg = args[0].replace(/[<@!>]/g, '');
+      const user = msg.guild.members.cache.get(replacedArg);
 
       // If no mention, try to find by username or user ID
       if (!user) {
@@ -50,7 +51,7 @@ module.exports = {
       const reason = args.slice(1).join(' ') || 'No reason provided';
 
       if (!user.bannable) {
-        return msg.reply("❌ | I cannot ban this user!\nPossibilities:\nMy role position is not above the user role position.\nI don't have necessary permissions to ban users.");
+        return msg.reply("❌ | I cannot ban this user!\nPossibilities:\nMy role position is not above the user role position.");
       }
 
       // Ban the user

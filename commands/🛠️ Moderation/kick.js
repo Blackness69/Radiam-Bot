@@ -16,10 +16,11 @@ module.exports = {
     }
     
     let user;
+    const replacedArg = args[0].replace(/[<@!>]/g, '');
 
     // Check if the first argument is a mention
     if (msg.mentions.users.size) {
-      user = msg.mentions.users.first();
+      user = msg.guild.members.cache.get(replacedArg);
     } else {
       // Try to find the user by username or ID
       const input = args[0];
@@ -40,7 +41,7 @@ module.exports = {
     if (!member) return msg.reply('That user is not in this server!');
 
     
-    if (!member.kickable) return msg.reply("❌ | I cannot kick this user!\nPossibilities:\nMy role position is not above the user role position.\nI don't have necessary permissions to kick users.");
+    if (!member.kickable) return msg.reply("❌ | I cannot kick this user!\nPossibilities:\nMy role position is not above the user role position.");
     
     if (msg.guild.ownerId === member.id) return msg.reply("You can't kick the server owner!");
     if (msg.author.id === member.id) return msg.reply("You can't kick yourself!");
