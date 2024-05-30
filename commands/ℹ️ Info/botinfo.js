@@ -2,6 +2,7 @@ const { EmbedBuilder, PermissionsBitField } = require("discord.js");
 const os = require("os");
 const moment = require("moment");
 const cpuStat = require("cpu-stat");
+const { color } = require('../../config');
 
 module.exports = {
   usage: 'botinfo',
@@ -40,10 +41,10 @@ module.exports = {
         })
         .setThumbnail(client.user.displayAvatarURL({ dynamic: true }))
         .setFooter({
-          text: `Made with 💞 by Slayerz Blackness`,
+          text: `Made with 💞 by 🥀! NotBlackness </>`,
           iconURL: msg.author.displayAvatarURL({ dynamic: true }),
         })
-        .setColor("#A020F0")
+        .setColor(`${color.default}`)
         .addFields(
           {
             name: `**Bot Name:**`,

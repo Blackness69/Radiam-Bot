@@ -1,4 +1,6 @@
 const { Snake } = require('discord-gamecord');
+const { color } = require('../../config');
+
 module.exports = {
   usage: 'snake',
   name: 'snake',

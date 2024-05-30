@@ -1,4 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
+const { color } = require('../../config');
 
 module.exports = {
     usage: 'membercount',
@@ -21,8 +22,8 @@ module.exports = {
         const dndCount = guild.members.cache.filter(member => (member.presence && member.presence.status === 'dnd') || (member.user.bot && member.presence && member.presence.status === 'dnd')).size;
 
         const embed = new EmbedBuilder()
-            .setColor('#ff0000')
-            .setTitle('Member Count And Bot Count')
+            .setColor(`${color.default}`)
+            .setTitle('Member Count')
             .setAuthor({
                 name: guild.name,
                 iconURL: guild.iconURL({ dynamic: true }),

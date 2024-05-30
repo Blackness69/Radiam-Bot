@@ -1,4 +1,6 @@
 const { Minesweeper } = require('discord-gamecord');
+const { color } = require('../../config');
+
 module.exports = {
   usage: 'minesweeper',
   name: 'minesweeper',
@@ -9,7 +11,7 @@ module.exports = {
       isSlashGame: false,
       embed: {
         title: 'Minesweeper',
-        color: '#A020F0',
+        color: `${color.default}`,
         description: 'Click on the buttons to reveal the blocks except mines.'
       },
       emojis: { flag: '🚩', mine: '💣' },

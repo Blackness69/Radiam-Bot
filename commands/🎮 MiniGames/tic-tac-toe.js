@@ -1,4 +1,5 @@
 const { TicTacToe } = require('discord-gamecord');
+const { color } = require('../../config');
 
 module.exports = {
   usage: 'tic-tac-toe <@opponent>',
@@ -18,7 +19,7 @@ module.exports = {
       opponent: opponent.user,
       embed: {
         title: 'Tic Tac Toe',
-        color: '#A020F0',
+        color: `${color.default}`,
         statusTitle: 'Status',
         overTitle: 'Game Over'
       },

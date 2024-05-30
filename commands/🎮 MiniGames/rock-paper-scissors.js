@@ -1,5 +1,5 @@
 const { RockPaperScissors } = require('discord-gamecord');
-
+const { color } = require('../../config');
 module.exports = {
   usage: 'rock-paper-scissors <@opponent>',
   name: 'rock-paper-scissors',
@@ -20,7 +20,7 @@ module.exports = {
         opponent: opponent.user, // Use opponent.user instead of opponent
         embed: {
           title: 'Rock Paper Scissors',
-          color: '#A020F0',
+          color: `${color.default}`,
           description: 'Press a button to make your choice.'
         },
         buttons: {

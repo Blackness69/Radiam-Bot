@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const os = require('os');
 const moment = require('moment');
 const cpuStat = require('cpu-stat');
+const { color } = require('../../config');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -41,7 +42,7 @@ module.exports = {
           text: `Made with 💞 by Slayerz Blackness`,
           iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
         })
-        .setColor('#A020F0')
+        .setColor(`${color.default}`)
         .addFields(
           {
             name: `**Bot Name:**`,

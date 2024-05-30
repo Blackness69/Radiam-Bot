@@ -1,4 +1,5 @@
 const{ Trivia } = require('discord-gamecord');
+const { color } = require('../../config');
 
 module.exports = {
   usage: 'trivia',
@@ -10,7 +11,7 @@ module.exports = {
       isSlashGame: false,
       embed: {
         title: 'Trivia',
-        color: '#A020F0',
+        color: `${color.default}`,
         description: 'You have 60 seconds to guess the answer.'
       },
       timeoutTime: 60000,

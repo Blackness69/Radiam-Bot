@@ -1,6 +1,7 @@
 const welcomeSchema = require('../Schemas/utils/welcomeSchema');
 const { EmbedBuilder } = require('discord.js');
 const client = require(process.cwd() + '/index.js');
+const { color } = require('../config');
 
 client.on("guildMemberAdd", async (member) => {
     const data = await welcomeSchema.findOne({ guildId: member.guild.id });
@@ -44,7 +45,7 @@ client.on("guildMemberAdd", async (member) => {
         const embed = new EmbedBuilder()
             .setTitle(titleToPut || 'Welcome!')
             .setDescription(messageToSend)
-            .setColor(embedColor || '#A020F0');
+            .setColor(embedColor || `${color.default}`);
 
         if (thumbnailUrl) embed.setThumbnail(thumbnailUrl);
         if (bannerUrl) embed.setImage(bannerUrl);

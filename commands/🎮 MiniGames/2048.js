@@ -1,4 +1,5 @@
 const { TwoZeroFourEight } = require('discord-gamecord');
+const { color } = require('../../config');
 
 module.exports = {
   usage: '2048',
@@ -11,7 +12,7 @@ module.exports = {
       isSlashGame: false,
       embed: {
         title: '2048',
-        color: '#A020F0'
+        color: `${color.default}`
       },
 
       emojis: {

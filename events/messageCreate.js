@@ -6,7 +6,7 @@ const schema = require('../Schemas/utils/autoresponder');
 const afkSchema = require('../Schemas/utils/afkSchema');
 
 client.on("messageCreate", async msg => {
-  if (!msg.content || msg.author.bot) return;
+  if (!msg.content || msg.author.bot || msg.guild) return;
 
   const currentPrefix = await getPrefix(msg.guild.id);
   const botMention = `<@${client.user.id}>`;

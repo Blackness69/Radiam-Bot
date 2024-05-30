@@ -1,4 +1,5 @@
 const { Wordle } = require('discord-gamecord');
+const { color } = require('../../config');
 
 module.exports = {
   usage: 'wordle',
@@ -10,7 +11,7 @@ module.exports = {
       isSlashGame: false,
       embed: {
         title: 'Wordle',
-        color: '#A020F0'
+        color: `${color.default}`
       },
       customWord: null,
       timeoutTume: 60000,

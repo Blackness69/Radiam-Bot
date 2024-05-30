@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionsBitField, ChannelType } = require('discord.js');
-const prettyMs = require('pretty-ms');
+const { color } = require('../../config');
 
 function parseDuration(durationStr) {
   const regex = /(\d+)\s*(second|seconds|s|minute|minutes|m|hour|hours|h|day|days|d)/gi;
@@ -148,7 +148,7 @@ module.exports = {
             enabled: false,
             content: contentMain,
             threshold: 60000000000_000,
-            embedColor: '#A020F0'
+            embedColor: `${color.default}`
           },
           messages: {
             giveaway: `🎉 **Giveaway Started** 🎉`,

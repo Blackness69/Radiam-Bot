@@ -1,4 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { color } = require('../../config');
 
 module.exports = {
     usage: 'avatar <@user> - (optional)',
@@ -22,7 +23,7 @@ module.exports = {
             .setFooter({ text: `${msg.guild.name}`, iconURL: msg.client.user.displayAvatarURL({ dynamic: true }) })
             .setImage(member.user.displayAvatarURL({ format: "png", size: 2048 }))
             .setTimestamp()
-            .setColor('#A020F0');
+            .setColor(`${color.default}`);
 
         await msg.reply({ embeds: [avatar], components: [link] });
     },

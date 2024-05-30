@@ -6,11 +6,11 @@ module.exports = {
     description: 'Locks the current channel',
     async execute({ msg }) {
         if (!msg.member.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
-            return msg.reply("❌ | You don't have permission to manage channels.");
+            return msg.reply("❌ | You do not have permission to manage channels.");
         }
 
         if (!msg.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
-            return msg.reply("❌ | I don't have permission to manage channels.");
+            return msg.reply("❌ | I do not have permission to manage channels.");
           }
         
         const channel = msg.mentions.channels.first() || msg.channel;
@@ -26,6 +26,6 @@ module.exports = {
             SendMessages: false
         });
 
-        await msg.reply(`🔒 Successfully the channel ${channel} is now locked.`);
+        await msg.reply(`🔒 | The channel <#${channel.id}> has been locked.`);
     },
 }; 

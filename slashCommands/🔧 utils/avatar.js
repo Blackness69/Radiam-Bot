@@ -1,4 +1,5 @@
 const {  EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder } = require('discord.js');
+const { color } = require('../../config');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -26,7 +27,7 @@ module.exports = {
             .setFooter({ text: `${interaction.guild.name}`, iconURL: interaction.client.user.displayAvatarURL({ dynamic: true }) })
             .setImage(user.displayAvatarURL({ format: "png", size: 2048 }))
             .setTimestamp()
-            .setColor('#A020F0');
+            .setColor(`${color.default}`);
 
         await interaction.reply({ embeds: [avatar], components: [link] });
     },

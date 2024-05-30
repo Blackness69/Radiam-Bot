@@ -1,6 +1,7 @@
 const leaveSchema = require('../Schemas/utils/leaveSchema');
 const { EmbedBuilder } = require('discord.js');
 const client = require(process.cwd() + '/index.js');
+const { color } = require('../config');
 
 client.on("guildMemberRemove", async (member) => {
     const data = await leaveSchema.findOne({ guildId: member.guild.id });
@@ -44,7 +45,7 @@ client.on("guildMemberRemove", async (member) => {
         const embed = new EmbedBuilder()
             .setTitle(titleToPut || 'Good Bye🥀')
             .setDescription(messageToSend)
-            .setColor(embedColor || '#A020F0');
+            .setColor(embedColor || `${color.default}`);
 
         if (thumbnailUrl) embed.setThumbnail(thumbnailUrl);
         if (bannerUrl) embed.setImage(bannerUrl);

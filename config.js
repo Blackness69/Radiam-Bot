@@ -16,9 +16,17 @@ module.exports = {
   mainOwnerId: "1153611682250227764",
   mongoURL: process.env.mongoURL || readFileSync('mongoURL.txt', 'utf-8'),
   YOUTUBE_API_KEY: process.env.YoutubeApiKey,
-  bannedPrefix: ['<@1233698268584870010>'],
   color: {
-    purple: "#A020F0",
+    default: "#8e00e7",
     red: "#ff0000"
+  },
+  emoji: {
+    search: "<:search:1245782174221733918>",
+    minigames: "<:minigames:1245777255683063942>",
+    utility: "<:utility:1245777409005850688>",
+    moderation: "<:moderation:1245777326323535936>",
+    dot: "<:dot:1243787726701068391>",
+    home: "<:home:1245777449149796445>",
+    info: "<:info:1245777371689255034>"
   }
 };

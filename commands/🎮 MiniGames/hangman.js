@@ -1,4 +1,6 @@
 const { Hangman } = require('discord-gamecord');
+const { color } = require('../../config');
+
 module.exports = {
   usage: 'hangman',
   name: 'hangman',
@@ -11,7 +13,7 @@ module.exports = {
       isSlashGame: false,
       embed: {
         title: 'Hangman',
-        color: '#5865F2'
+        color: `${color.default}`
       },
       hangman: { hat: '🎩', head: '😟', shirt: '👕', pants: '🩳', boots: '👞👞' },
        customWord: words[wordRandom],

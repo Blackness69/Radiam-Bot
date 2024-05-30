@@ -1,4 +1,5 @@
 const { MatchPairs } = require('discord-gamecord');
+const { color } = require('../../config');
 
 module.exports = {
   usage: 'matchpairs',
@@ -11,7 +12,7 @@ module.exports = {
       isSlashGame: false,
       embed: {
         title: 'Match pairs',
-        color: '#A020F0',
+        color: `${color.default}`,
         description: 'Click on the button to match emojis with their pairs.'
       },
       timeoutTime: 60000,
