@@ -1,7 +1,7 @@
 const { getPrefix } = require('../../config');
 
 module.exports = {
-  usage: 'r.ping',
+  usage: 'ping',
   name: 'ping',
   description: 'Shows the bot\'s ping.',
   async execute({msg, client}) {

@@ -4,7 +4,7 @@ const { getPrefix } = require('../../config');
 const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
-  usage: 'r.reset-prefix',
+  usage: 'reset-prefix',
   name: 'reset-prefix',
   description: 'Reset the custom prefix for the bot in the current server.',
   async execute({ msg }) {

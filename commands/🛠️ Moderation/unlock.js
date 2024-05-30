@@ -1,7 +1,7 @@
 const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
-    usage: 'r.unlock <channel (optional)>',
+    usage: 'unlock <#channel> - (optional)',
     name: 'unlock',
     description: 'Unlocks the current channel',
     async execute({ msg }) {

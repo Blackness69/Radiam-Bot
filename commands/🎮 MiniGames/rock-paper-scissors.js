@@ -1,7 +1,7 @@
 const { RockPaperScissors } = require('discord-gamecord');
 
 module.exports = {
-  usage: 'r.rock-paper-scissors <opponent>',
+  usage: 'rock-paper-scissors <@opponent>',
   name: 'rock-paper-scissors',
   aliases: ['rps', 'rock-paper-scissor'],
   description: 'Play a Rock Paper Scissors game with your friend.',

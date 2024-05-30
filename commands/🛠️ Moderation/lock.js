@@ -1,7 +1,7 @@
 const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
-    usage: 'r.lock <channel (optional)>',
+    usage: 'lock <#channel> - (optional)',
     name: 'lock',
     description: 'Locks the current channel',
     async execute({ msg }) {

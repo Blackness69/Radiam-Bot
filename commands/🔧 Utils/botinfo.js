@@ -4,8 +4,9 @@ const moment = require("moment");
 const cpuStat = require("cpu-stat");
 
 module.exports = {
-  usage: 'r.botinfo',
+  usage: 'botinfo',
   name: "botinfo",
+  aliases: ['bot-info'],
   description: "Shows some information about the bot.",
   async execute({ client, msg }) {
     // uptime of bot

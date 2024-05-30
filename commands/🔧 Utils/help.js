@@ -3,7 +3,7 @@ const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, } = require('di
 const {getPrefix} = require('../../config');
 
 module.exports = {
-  usage: 'r.help',
+  usage: 'help',
   name: 'help',
   description: 'Shows list of available commands',
   async execute({msg, args, client}) {
@@ -28,7 +28,7 @@ module.exports = {
     const embeds = []
     for (const category of categories) {
       const commandsInCategory = commands.filter(command => command.category.split(' ')[1] === category.name)
-      const commandList = commandsInCategory.map(command => ({name: `${command.name} | \`\`${command.usage}\`\``, value: command.description || 'No description', inline: true}))
+      const commandList = commandsInCategory.map(command => ({name: `${command.name} | \`\`${prefix}${command.usage}\`\``, value: command.description || 'No description', inline: true}))
       const categoryEmbed = new EmbedBuilder()
         .setColor('#A020F0')
         .setTitle(`${category.emoji.id ? `<${category.emoji.animated ? 'a' : ''}:${category.emoji.name}:${category.emoji.id}>` : category.emoji.name} ${category.name} Commands`)

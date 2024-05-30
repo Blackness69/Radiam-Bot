@@ -1,6 +1,7 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = {
+    usage: 'avatar <@user> - (optional)',
     name: 'avatar',
     aliases: ['av'],
     description: 'Get your own avatar or the avatar of another user',

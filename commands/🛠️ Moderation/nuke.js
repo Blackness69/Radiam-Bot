@@ -1,7 +1,7 @@
 const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
-    usage: 'r.nuke <channel (optional)>',
+    usage: 'nuke <#channel> - (optional)',
     name: 'nuke',
     description: 'Deletes and recreates the current channel',
     async execute({ msg }) {

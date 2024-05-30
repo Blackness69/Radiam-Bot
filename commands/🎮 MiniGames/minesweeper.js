@@ -1,6 +1,6 @@
 const { Minesweeper } = require('discord-gamecord');
 module.exports = {
-  usage: 'r.minesweeper',
+  usage: 'minesweeper',
   name: 'minesweeper',
   description: 'Play a minesweeper game',
   async execute({msg}) {

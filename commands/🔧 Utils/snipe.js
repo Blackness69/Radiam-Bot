@@ -2,9 +2,9 @@ const { SlashCommandBuilder } = require('discord.js');
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-    usage: 'r.snipe',
+    usage: 'snipe <#channel> - (optional)',
     name: 'snipe',
-    description: 'Snipes a message',
+    description: 'Snipes a message from a channel or the current channel.',
   async execute({ msg, client }) {
     try {
     const channel = msg.channel;

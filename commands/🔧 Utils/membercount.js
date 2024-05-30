@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-    usage: 'r.membercount',
+    usage: 'membercount',
     name: 'membercount',
     aliases: ['mc'],
     description: 'Displays the member count of the server.',

@@ -1,8 +1,8 @@
 const { Snake } = require('discord-gamecord');
 module.exports = {
-  usage: 'r.snake',
+  usage: 'snake',
   name: 'snake',
-  description: 'Play a snake game',
+  description: 'Play a snake game.',
   async execute({msg, args, client}) {
     const Game = new Snake({
       message: msg,
