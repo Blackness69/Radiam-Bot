@@ -13,7 +13,7 @@ module.exports = {
           return option
           .setName('channel')
           .setDescription('The channel where you want the bot to chat.')
-          .addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement)
+          .addChannelTypes(ChannelType.GuildText)
           .setRequired(false)
         })
     })
