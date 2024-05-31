@@ -66,6 +66,7 @@ module.exports = {
           option
             .setName('channel')
             .setDescription('The channel where you want to start the giveaway.')
+            .addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement)
             .setRequired(false))
         .addStringOption(option =>
           option
