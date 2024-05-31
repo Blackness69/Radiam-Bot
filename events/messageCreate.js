@@ -66,7 +66,7 @@ client.on("messageCreate", async msg => {
     const chatbotSetting = await ChatbotChannel.findOne({ guildId: msg.guild.id, channelId: msg.channel.id });
 
     if (chatbotSetting || msg.mentions.has(client.user)) {
-      fetch(`http://api.brainshop.ai/get?bid=153861&key=0ZjvbPWKAxJvcJ96&uid=1&msg=${encodeURIComponent(msg.content.replace(`<@${client.user.id}>`, ''))}`)
+      fetch(`http://api.brainshop.ai/get?bid=182262&key=q1hH7xyEdV1N0w6b&uid=1&msg=${encodeURIComponent(msg.content.replace(`<@${client.user.id}>`, ''))}`)
         .then(res => res.json())
         .then(data => {
           msg.channel.sendTyping();
