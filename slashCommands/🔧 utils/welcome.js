@@ -21,8 +21,7 @@ module.exports = {
                         .setName('channel')
                         .setDescription('The channel where the welcome message will be sent.')
                         .addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement)
-                        .setRequired(true)
-                        .addChannelTypes(ChannelType.GuildText)
+                        .setRequired(true)                 
                 })
                 .addBooleanOption(option => {
                     return option

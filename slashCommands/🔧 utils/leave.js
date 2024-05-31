@@ -22,7 +22,6 @@ module.exports = {
                         .setDescription('The channel where the leave message will be sent.')
                         .addChannelTypes(ChannelType.GuildText, ChannelType.GuildAnnouncement)
                         .setRequired(true)
-                        .addChannelTypes(ChannelType.GuildText)
                 })
                 .addBooleanOption(option => {
                     return option

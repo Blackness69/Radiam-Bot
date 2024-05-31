@@ -1,9 +1,10 @@
-// messageCreate.js
 const { getPrefix, ownerIds } = require('../config');
 const Discord = require('discord.js');
 const client = require(process.cwd() + '/index.js');
 const schema = require('../Schemas/utils/autoresponder');
 const afkSchema = require('../Schemas/utils/afkSchema');
+const ChatbotChannel = require('../Schemas/utils/chatbotSchema');
+const fetch = require('node-fetch');
 
 client.on("messageCreate", async msg => {
   if (!msg.content || msg.author.bot || !msg.guild) return;
@@ -28,9 +29,6 @@ client.on("messageCreate", async msg => {
   }
 
   // AFK System
-  if (msg.author.bot) return;
-
-  // Check if the author is AFK
   const check1 = await afkSchema.findOne({
     Guild: msg.guild.id,
     User: msg.author.id,
@@ -46,11 +44,10 @@ client.on("messageCreate", async msg => {
       content: `Welcome back, ${msg.author}! I have removed your AFK.`,
     });
   } else {
-    // Check if a mentioned user is AFK
     const mentionedUsers = msg.mentions.users;
 
     mentionedUsers.forEach(async (user) => {
-       const Data = await afkSchema.findOne({
+      const Data = await afkSchema.findOne({
         Guild: msg.guild.id,
         User: user.id,
       });
@@ -62,6 +59,25 @@ client.on("messageCreate", async msg => {
         });
       }
     });
+  }
+
+  // Chat with Brainshop API
+  try {
+    const chatbotSetting = await ChatbotChannel.findOne({ guildId: msg.guild.id, channelId: msg.channel.id });
+
+    if (chatbotSetting || msg.mentions.has(client.user)) {
+      fetch(`http://api.brainshop.ai/get?bid=153861&key=0ZjvbPWKAxJvcJ96&uid=1&msg=${encodeURIComponent(msg.content.replace(`<@${client.user.id}>`, ''))}`)
+        .then(res => res.json())
+        .then(data => {
+          msg.channel.sendTyping();
+          msg.channel.send(data.cnt).catch(() => {});
+        })
+        .catch(error => {
+          console.error('Error with Brainshop API request:', error);
+        });
+    }
+  } catch (e) {
+    console.log('Error:', e);
   }
 
   let messageContent = msg.content;
@@ -93,42 +109,5 @@ client.on("messageCreate", async msg => {
       console.error(error);
       return msg.reply('There was an error executing that command!');
     }
-  }
-
-  // AFK System
-  if (msg.author.bot) return;
-
-  // Check if the author is AFK
-  const check = await afkSchema.findOne({
-    Guild: msg.guild.id,
-    User: msg.author.id,
-  });
-
-  if (check) {
-    await afkSchema.deleteMany({
-      Guild: msg.guild.id,
-      User: msg.author.id,
-    });
-
-    await msg.reply({
-      content: `Welcome back, ${msg.author}! I have removed your AFK.`,
-    });
-  } else {
-    // Check if a mentioned user is AFK
-    const mentionedUsers = msg.mentions.users;
-
-    mentionedUsers.forEach(async (user) => {
-       const Data = await afkSchema.findOne({
-        Guild: msg.guild.id,
-        User: user.id,
-      });
-
-      if (Data) {
-        const reason = Data.Reason || "I'm AFK!";
-        await msg.reply({
-          content: `${user.tag} is currently AFK! - Reason: **${reason}**`,
-        });
-      }
-    });
   }
 });
