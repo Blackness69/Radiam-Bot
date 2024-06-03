@@ -1,4 +1,4 @@
-const { getPrefix, token, mongoURL } = require('./config.js');
+const { getPrefix, token, mongoURL, color } = require('./config.js');
 const fs = require('fs');
 const ms = require('pretty-ms');
 require('dotenv').config();
@@ -82,9 +82,9 @@ client.giveawayManager = new GiveawaysManager(client, {
 
         botsCanWin: false,
 
-        embedColor: `#A020F0`,
+        embedColor: `${color.default}`,
 
-        embedColorEnd: `#A020F0`,
+        embedColorEnd: `${color.default}`,
 
         reaction: `🎉`,
 

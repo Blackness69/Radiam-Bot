@@ -45,6 +45,6 @@ client.on("ready", async (client) => {
   })
 
   ap.on('error', () => {
-    console.log('An error occured while posting stats on top.gg');
+    console.log('An error occured while posting stats on top.gg')
   })
-}); 
+});
