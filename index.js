@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Example app listening to https://localhost:${port}`)
 });
 
 const { ActivityType, Collection, GatewayIntentBits, Client, Collector, VoiceChannel, EmbedBuilder, Partials } = require('discord.js');

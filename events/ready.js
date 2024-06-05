@@ -16,6 +16,7 @@ client.on("ready", async (client) => {
   });
   await client.application.commands.set(client.slashCommands.map(command => command.data));
 
+
   if (!mongoURL) {
     console.log(colors.magenta('Mongo Database • Disconnected'))
     console.log(colors.magenta('0===========================0'));
