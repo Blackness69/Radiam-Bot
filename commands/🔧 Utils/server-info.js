@@ -30,7 +30,7 @@ module.exports = {
     const serverInfoEmbed = new EmbedBuilder()
       .setTitle(`${emoji.info} Server Information`)
       .addFields(
-        { name: 'Owner Info', value: `ID: ${ownerId}\nNickname: ${ownerNickname}\nDisplay Name: ${displayName}`, inline: true },
+        { name: 'Owner Info', value: `Owner: <@${ownerId}>\nID: ${ownerId}\nNickname: ${ownerNickname}\nDisplay Name: ${displayName}`, inline: true },
         { name: 'Server Info', value: `Name: ${guildName}\nID: ${guildId}\nDescription: ${guildDescription}\nRole Count: **${roleCount}**`, inline: true },
         { name: 'Boosts Info', value: `Boost Count: **${boostCount}**\nBoost Tier: **${boostTier}**`, inline: true },
         { name: 'Channels and Categories Info', value: `Total Channels: **${totalChannelCount}**\nText Channels: **${textChannelCount}**\nVoice Channels: **${voiceChannelCount}**\nCategories: **${categoriesCount}**`, inline: true },
