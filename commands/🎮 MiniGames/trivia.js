@@ -1,11 +1,22 @@
-const{ Trivia } = require('discord-gamecord');
+const { Trivia } = require('discord-gamecord');
 const { color } = require('../../config');
 
 module.exports = {
-  usage: 'trivia',
+  usage: 'trivia [easy/medium/hard]',
   name: 'trivia',
   description: 'Play a trivia game.',
-  async execute({msg}) {
+  async execute({msg, args}) {
+    let difficulty;
+    if (args[0] === 'easy') {
+      difficulty = 'easy';
+    } else if (args[0] === 'medium') {
+      difficulty = 'medium';
+    } else if (args[0] === 'hard') {
+      difficulty = 'hard';
+    } else {
+      difficulty = 'medium';
+    };
+
     const Game = new Trivia({
       message: msg,
       isSlashGame: false,
@@ -19,17 +30,16 @@ module.exports = {
       trueButtonStyle: 'SUCCESS',
       falseButtonStyle: 'DANGER',
       mode: 'multiple', //multiple/single
-      difficulty: 'medium',
+      difficulty: difficulty,
       winMessage: 'You won! The correct answer is {answer}',
-      loseMessage: 'You lost! The correct answrr is {answer}',
+      loseMessage: 'You lost! The correct answer is {answer}',
       errMessage: 'Unable to fetch questions.',
       playerOnlyMessage: 'Only {player} can use these buttons.'
-      
     });
 
     Game.startGame();
     Game.on('gameOver', result => {
       return;
-    });
-  }
+});
+}
 }
