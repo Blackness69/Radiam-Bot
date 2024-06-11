@@ -2,7 +2,7 @@ const { ownerId } = require('../../config.js');
 const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
-  usage: 'kick <@user> | <username> | <user_id> [reason]',
+  usage: 'kick <@user> / <username> / <user_id> [reason]',
   name: 'kick',
   description: 'Kick a user from the server',
   execute({ args, msg }) {

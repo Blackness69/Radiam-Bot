@@ -2,7 +2,7 @@ const { ChatInputCommandInteraction, SlashCommandBuilder, Client, EmbedBuilder, 
 const { profileImage } = require('discord-arts');
 
 module.exports = {
-    usage: 'profile',
+    usage: 'profile [<@user>]',
     name: 'profile',
     description: 'This command allows you to view a user\'s profile using an image.',
     async execute({msg}) {

@@ -2,7 +2,7 @@
 const { PermissionsBitField } = require('discord.js');
 
 module.exports = {
-  usage: 'ban <@user> | <username> | <user_id> [reason]',
+  usage: 'ban <@user> / <user_id> / <username> [reason]',
   name: 'ban',
   description: 'Ban a user from the server.',
   async execute({ msg, args }) {

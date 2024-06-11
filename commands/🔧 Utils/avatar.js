@@ -2,7 +2,7 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('
 const { color } = require('../../config');
 
 module.exports = {
-    usage: 'avatar <@user> - (optional)',
+    usage: 'avatar [<@user>]',
     name: 'avatar',
     aliases: ['av'],
     description: 'Get your own avatar or the avatar of another user',
