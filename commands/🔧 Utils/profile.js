@@ -5,7 +5,7 @@ module.exports = {
     usage: 'profile [<@user>]',
     name: 'profile',
     description: 'This command allows you to view a user\'s profile using an image.',
-    async execute({msg}) {
+    async execute({msg, args}) {
 
         const replacedArg = args[0].replace(/[<@!>]/g, '');
         const user = msg.guild.members.cache.get(replacedArg) || msg.author;
