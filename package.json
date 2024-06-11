@@ -16,6 +16,7 @@
     "axios": "^1.6.8",
     "colors": "^1.4.0",
     "cpu-stat": "^2.0.1",
+    "discord-arts": "^0.6.1",
     "discord-gamecord": "^4.4.2",
     "discord-giveaways": "^6.0.1",
     "discord.js": "^14.15.3",
