@@ -16,6 +16,17 @@ module.exports = {
 
         const user = interaction.options.getUser('user') || interaction.user
 
+        const member = await interaction.guild.members.fetch(user.id);
+        const presence = member.presence?.status || 'offline';
+
+        const statusMessage = {
+            online: 'online',
+            idle: 'idle',
+            dnd: 'dnd',
+            offline: 'offline',
+            streaming: 'streaming'
+        };
+        
         const buffer = await profileImage(user.id, {
             squareAvatar: false,
             removeAvatarFrame: false,
@@ -24,8 +35,7 @@ module.exports = {
             disableProfileTheme: false,
             moreBackgroundBlur: true,
             removeAvatarFrame: false,
-            presenceStatus: 'idle'
-
+            presenceStatus: statusMessage[presence]
         });
 
         interaction.editReply({ files: [new AttachmentBuilder(buffer)] });
