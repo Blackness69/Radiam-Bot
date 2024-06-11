@@ -7,8 +7,13 @@ module.exports = {
     description: 'This command allows you to view a user\'s profile using an image.',
     async execute({msg, args}) {
 
-        const replacedArg = args[0].replace(/[<@!>]/g, '');
-        const user = msg.guild.members.cache.get(replacedArg) || msg.author;
+        let user;
+        if (args.length > 0) {
+            const replacedArg = args[0].replace(/[<@!>]/g, '');
+            user = msg.guild.members.cache.get(replacedArg) || msg.author;
+        } else {
+            user = msg.author;
+        }
 
         const buffer = await profileImage(user.id, {
             squareAvatar: false,
