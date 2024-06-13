@@ -7,8 +7,13 @@ module.exports = {
     aliases: ['av'],
     description: 'Get your own avatar or the avatar of another user',
     async execute({ msg, args }) {
-        const replacedArg = args[0].replace(/[<@!>]/g, '');
-        const member = msg.guild.members.cache.get(replacedArg) || msg.author;
+        let member;
+        if (args.length > 0) {
+            const replacedArg = args[0].replace(/[<@!>]/g, '');
+            member = await msg.guild.members.fetch(replacedArg).catch(() => null) || msg.author;
+        } else {
+            member = msg.author;
+        }
 
         const link = new ActionRowBuilder()
             .addComponents(
