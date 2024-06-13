@@ -31,8 +31,8 @@ module.exports = {
                 { name: 'Total Member(s):', value: `**${memberCount}**`, inline: false },
                 { name: 'Bot(s):', value: `${botCount}`, inline: false },
                 { name: 'Online:', value: `**${onlineCount}**`, inline: false },
-                { name: 'Offline:', value: `**${offlineCount}**`, inline: true },
-                { name: 'Do Not Disturb:', value: `**${dndCount}**`, inline: true }
+                { name: 'Offline:', value: `**${offlineCount}**`, inline: false },
+                { name: 'Do Not Disturb:', value: `**${dndCount}**`, inline: false }
             )
             .setTimestamp()
             .setFooter({ text: `Requested by ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL() });

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder, ChannelType } = require('discord.js');
 const welcomeSchema = require('../../Schemas/utils/welcomeSchema');
 const axios = require('axios');
+const { color } = require('../../config');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -159,12 +160,12 @@ module.exports = {
                 .setTitle('Variables for Custom Welcome Message')
                 .setDescription('Here are the variables that can be used in the custom welcome message:')
                 .addFields(
-                    { name: '{userMention}', value: 'Mentions the user', inline: true },
-                    { name: '{userName}', value: 'Displays the user\'s username', inline: true },
-                    { name: '{guildName}', value: 'Displays the server\'s name', inline: true },
-                    { name: '{memberCount}', value: 'Displays the member count of the server', inline: true }
+                    { name: '{userMention}', value: 'Mentions the user', inline: false },
+                    { name: '{userName}', value: 'Displays the user\'s username', inline: false },
+                    { name: '{guildName}', value: 'Displays the server\'s name', inline: false },
+                    { name: '{memberCount}', value: 'Displays the member count of the server', inline: false }
                 )
-                .setColor('#A020F0');
+                .setColor(color.default);
 
             await interaction.reply({ embeds: [variablesEmbed], ephemeral: true });
         }

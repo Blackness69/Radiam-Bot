@@ -36,7 +36,7 @@ module.exports = {
     const embeds = [];
     for (const category of categories) {
       const commandsInCategory = commands.filter(command => command.category.split(' ')[1] === category.name);
-      const commandList = commandsInCategory.map(command => ({ name: `${command.name} | \`\`${prefix}${command.usage}\`\``, value: command.description || 'No description', inline: true }));
+      const commandList = commandsInCategory.map(command => ({ name: `${command.name} | \`\`${prefix}${command.usage}\`\``, value: command.description || 'No description', inline: false }));
       const categoryEmbed = new EmbedBuilder()
         .setColor(`${color.default}`)
         .setTitle(`${category.emoji.id ? `<${category.emoji.animated ? 'a' : ''}:${category.emoji.name}:${category.emoji.id}>` : category.emoji.name} ${category.name} Commands`)

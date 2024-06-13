@@ -49,21 +49,21 @@ module.exports = {
         })
         .setColor(color.default)
         .addFields(
-          { name: "**Bot Name:**", value: `${client.user.username}`, inline: true },
-          { name: "**Bot ID:**", value: `${client.user.id}`, inline: true },
-          { name: "\u200B", value: "\u200B", inline: true },
-          { name: "**Bot Created At:**", value: `${moment.utc(client.user.createdAt).format("LLLL")}`, inline: true },
-          { name: "**Total Server(s):**", value: `${client.guilds.cache.size}`, inline: true },
-          { name: "**Total Member(s):**", value: `${client.users.cache.size}`, inline: true },
-          { name: "**Total Channel(s):**", value: `${client.channels.cache.size.toLocaleString()}`, inline: true },
-          { name: "**UpTime:**", value: `${uptimeString}`, inline: true },
-          { name: "**Ping:**", value: `API Latency: **${client.ws.ping}**ms\nClient Ping: **${Date.now() - msg.createdTimestamp}**ms`, inline: true },
-          { name: "\u200B", value: "\u200B", inline: true },
-          { name: "**NodeJS Version:**", value: `${nodeVersion}`, inline: true },
-          { name: "**Memory Usage:**", value: `${memoryUsage}`, inline: true },
-          { name: "**CPU Usage:**", value: `${CPUUsage}%`, inline: true },
-          { name: "**CPU Model:**", value: `${CPUInfo}`, inline: true },
-          { name: "**Cores:**", value: `${cores}`, inline: true },
+          { name: "**Bot Name:**", value: `${client.user.username}`, inline: false },
+          { name: "**Bot ID:**", value: `${client.user.id}`, inline: false },
+          { name: "\u200B", value: "\u200B", inline: false },
+          { name: "**Bot Created At:**", value: `${moment.utc(client.user.createdAt).format("LLLL")}`, inline: false },
+          { name: "**Total Server(s):**", value: `${client.guilds.cache.size}`, inline: false },
+          { name: "**Total Member(s):**", value: `${client.users.cache.size}`, inline: false },
+          { name: "**Total Channel(s):**", value: `${client.channels.cache.size.toLocaleString()}`, inline: false },
+          { name: "**UpTime:**", value: `${uptimeString}`, inline: false },
+          { name: "**Ping:**", value: `API Latency: **${client.ws.ping}**ms\nClient Ping: **${Date.now() - msg.createdTimestamp}**ms`, inline: false },
+          { name: "\u200B", value: "\u200B", inline: false },
+          { name: "**NodeJS Version:**", value: `${nodeVersion}`, inline: false },
+          { name: "**Memory Usage:**", value: `${memoryUsage}`, inline: false },
+          { name: "**CPU Usage:**", value: `${CPUUsage}%`, inline: false },
+          { name: "**CPU Model:**", value: `${CPUInfo}`, inline: false },
+          { name: "**Cores:**", value: `${cores}`, inline: false },
         );
 
       msg.reply({ embeds: [botinfoEmbed] });

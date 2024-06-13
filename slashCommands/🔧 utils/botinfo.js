@@ -1,15 +1,15 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const os = require('os');
-const moment = require('moment');
-const cpuStat = require('cpu-stat');
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const os = require("os");
+const moment = require("moment");
+const cpuStat = require("cpu-stat");
 const { color } = require('../../config');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('botinfo')
-    .setDescription('Shows some information about the bot.'),
-  async execute({interaction, client}) {
-    // uptime of bot
+  .setName("botinfo")
+  .setDescription("Shows some information about the bot."),
+  async execute({ client, interaction }) {
+    // Calculate uptime
     const days = Math.floor(client.uptime / 86400000);
     const hours = Math.floor((client.uptime / 3600000) % 24);
     const minutes = Math.floor((client.uptime / 60000) % 60);
@@ -23,87 +23,59 @@ module.exports = {
 
     if (!uptimeString) uptimeString = '0s'; // Show 0s if the uptime is 0
 
-    cpuStat.usagePercent(function (error, percent) {
+    // Calculate memory usage
+    const memoryUsage = formatBytes(process.memoryUsage().heapUsed);
+
+    // Calculate CPU usage
+    cpuStat.usagePercent((error, percent) => {
       if (error) return console.log(error);
 
-      const node = process.version;
-      const memoryUsage = formatBytes(process.memoryUsage().heapUsed);
-      const CPU = percent.toFixed(2);
-      const CPUModel = os.cpus()[0].model;
+      const nodeVersion = process.version;
+      const CPUUsage = percent.toFixed(2);
+      const CPUInfo = os.cpus()[0].model;
       const cores = os.cpus().length;
 
+      // Create and send embed
       const botinfoEmbed = new EmbedBuilder()
         .setAuthor({
-          name: 'Bot info',
+          name: "Bot info",
           iconURL: client.user.displayAvatarURL({ dynamic: true }),
         })
         .setThumbnail(client.user.displayAvatarURL({ dynamic: true }))
         .setFooter({
-          text: `Made with 💞 by Slayerz Blackness`,
+          text: `Made With 💞 By 🥀! NotBlackness </>`,
           iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
         })
-        .setColor(`${color.default}`)
+        .setColor(color.default)
         .addFields(
-          {
-            name: `**Bot Name:**`,
-            value: `${client.user.username}`,
-            inline: true,
-          },
-          { name: `**Bot ID:**`, value: `${client.user.id}`, inline: true },
-          { name: `\u200B`, value: `\u200B`, inline: true }, // We Will This As Empty So It Won't Look Messed Up In Embed
-          {
-            name: `**Bot Created At:**`,
-            value: `${moment.utc(client.user.createdAt).format('LLLL')}`,
-            inline: true,
-          },
-          {
-            name: `**Bot Joined At:**`,
-            value: `${moment.utc(client.joinedAt).format('LLLL')}`,
-            inline: true,
-          },
-          { name: `\u200B`, value: `\u200B`, inline: true }, // We Will This As Empty So It Won't Look Messed Up In Embed
-          {
-            name: `**Total Server(s):**`,
-            value: `${client.guilds.cache.size}`,
-            inline: true,
-          },
-          {
-            name: `**Total Member(s):**`,
-            value: `${client.users.cache.size}`,
-            inline: true,
-          },
-          {
-            name: `**Total Channel(s):**`,
-            value: `${client.channels.cache.size.toLocaleString()}`,
-            inline: true,
-          },
-          {
-            name: `**UpTime:**`,
-            value: `${uptimeString}`,
-            inline: true,
-          },
-          {
-            name: `**Ping:**`,
-            value: `API Latency: **${client.ws.ping}**ms\nClient Ping: **${Date.now() - interaction.createdTimestamp}**ms`,
-            inline: true,
-          },
-          { name: `\u200B`, value: `\u200B`, inline: true }, // We Will This As Empty So It Won't Look Messed Up In Embed
-          { name: `**NodeJS Version:**`, value: `${node}`, inline: true },
-          { name: `**Memory Usage:**`, value: `${memoryUsage}`, inline: true },
-          { name: `**CPU Usage:**`, value: `${CPU}%`, inline: true },
-          { name: `**CPU Model:**`, value: `${CPUModel}`, inline: true },
-          { name: `**Cores:**`, value: `${cores}`, inline: true },
+          { name: "**Bot Name:**", value: `${client.user.username}`, inline: false },
+          { name: "**Bot ID:**", value: `${client.user.id}`, inline: false },
+          { name: "\u200B", value: "\u200B", inline: false },
+          { name: "**Bot Created At:**", value: `${moment.utc(client.user.createdAt).format("LLLL")}`, inline: false },
+          { name: "**Total Server(s):**", value: `${client.guilds.cache.size.toLocaleString()}`, inline: false },
+          { name: "**Total Member(s):**", value: `${client.users.cache.size.toLocaleString()}`, inline: false },
+          { name: "**Total Channel(s):**", value: `${client.channels.cache.size.toLocaleString()}`, inline: false },
+          { name: "**UpTime:**", value: `${uptimeString}`, inline: false },
+          { name: "**Ping:**", value: `API Latency: **${client.ws.ping}**ms\nClient Ping: **${Date.now() - interaction.createdTimestamp}**ms`, inline: false },
+          { name: "\u200B", value: "\u200B", inline: false },
+          { name: "**NodeJS Version:**", value: `${nodeVersion}`, inline: false },
+          { name: "**Memory Usage:**", value: `${memoryUsage}`, inline: false },
+          { name: "**CPU Usage:**", value: `${CPUUsage}%`, inline: false },
+          { name: "**CPU Model:**", value: `${CPUInfo}`, inline: false },
+          { name: "**Cores:**", value: `${cores}`, inline: false },
         );
+
       interaction.reply({ embeds: [botinfoEmbed] });
     });
 
-    function formatBytes(a, b) {
-      let c = 1024; // 1GB = 1024MB
-      d = b || 2;
-      e = ['B', 'KB', 'MB', 'GB', 'TB'];
-      f = Math.floor(Math.log(a) / Math.log(c));
-
-      return parseFloat((a / Math.pow(c, f)).toFixed(d)) + ' ' + e[f];
+    // Function to format bytes as human-readable text
+    function formatBytes(bytes, decimals = 2) {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const dm = decimals < 0 ? 0 : decimals;
+      const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
   },
 };

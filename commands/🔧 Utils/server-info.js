@@ -30,12 +30,12 @@ module.exports = {
     const serverInfoEmbed = new EmbedBuilder()
       .setTitle(`${emoji.info} Server Information`)
       .addFields(
-        { name: 'Owner Info', value: `Owner: <@${ownerId}>\nID: ${ownerId}\nNickname: ${ownerNickname}\nDisplay Name: ${displayName}`, inline: true },
-        { name: 'Server Info', value: `Name: ${guildName}\nID: ${guildId}\nDescription: ${guildDescription}\nRole Count: **${roleCount}**`, inline: true },
-        { name: 'Boosts Info', value: `Boost Count: **${boostCount}**\nBoost Tier: **${boostTier}**`, inline: true },
-        { name: 'Channels and Categories Info', value: `Total Channels: **${totalChannelCount}**\nText Channels: **${textChannelCount}**\nVoice Channels: **${voiceChannelCount}**\nCategories: **${categoriesCount}**`, inline: true },
+        { name: 'Owner Info', value: `Owner: <@${ownerId}>\nID: ${ownerId}\nNickname: ${ownerNickname}\nDisplay Name: ${displayName}`, inline: false },
+        { name: 'Server Info', value: `Name: ${guildName}\nID: ${guildId}\nDescription: ${guildDescription}\nRole Count: **${roleCount}**`, inline: false },
+        { name: 'Boosts Info', value: `Boost Count: **${boostCount}**\nBoost Tier: **${boostTier}**`, inline: false },
+        { name: 'Channels and Categories Info', value: `Total Channels: **${totalChannelCount}**\nText Channels: **${textChannelCount}**\nVoice Channels: **${voiceChannelCount}**\nCategories: **${categoriesCount}**`, inline: false },
       )
-      .setColor(`${color.default}`)
+      .setColor(color.default)
       .setThumbnail(guild.iconURL({ dynamic: true }))
       .setFooter({ text: `Requested by ${msg.author.tag}`, iconURL: msg.author.displayAvatarURL({ dynamic: true }) });
 
