@@ -26,9 +26,9 @@ module.exports = {
 
     // Handling roles
     const roles = member.roles.cache.map(r => r.toString());
-    const maxRolesToShow = 100;
+    const maxRolesToShow = 40;
     const remainingRolesCount = roles.length > maxRolesToShow ? roles.length - maxRolesToShow : 0;
-    const rolesToShow = roles.slice(0, maxRolesToShow).join(', ') + (remainingRolesCount > 0 ? `, and ${remainingRolesCount}+ more` : '');
+    const rolesToShow = roles.slice(0, maxRolesToShow).join(', ') + (remainingRolesCount > 0 ? ` and ${remainingRolesCount}+ more` : '');
 
     const embed = new EmbedBuilder()
       .setColor(color.default)

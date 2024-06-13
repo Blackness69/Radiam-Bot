@@ -44,7 +44,7 @@ module.exports = {
         })
         .setThumbnail(client.user.displayAvatarURL({ dynamic: true }))
         .setFooter({
-          text: `Made with 💞 by 🥀! NotBlackness </>`,
+          text: `Made With 💞 By 🥀! NotBlackness </>`,
           iconURL: msg.author.displayAvatarURL({ dynamic: true }),
         })
         .setColor(color.default)
