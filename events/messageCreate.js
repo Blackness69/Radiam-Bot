@@ -1,10 +1,10 @@
 const { getPrefix, ownerIds } = require('../config');
 const Discord = require('discord.js');
 const client = require(process.cwd() + '/index.js');
-const schema = require('../Schemas/utils/autoresponder');
-const afkSchema = require('../Schemas/utils/afkSchema');
-const ChatbotChannel = require('../Schemas/utils/chatbotSchema');
+const schema = require('../Schemas/autoresponder');
+const afkSchema = require('../Schemas/afkSchema');
 const fetch = require('node-fetch');
+const levelSchema = require('../Schemas/levelSchema');
 
 client.on("messageCreate", async msg => {
   if (!msg.content || msg.author.bot || !msg.guild) return;
@@ -59,25 +59,6 @@ client.on("messageCreate", async msg => {
         });
       }
     });
-  }
-
-  // Chat with Brainshop API
-  try {
-    const chatbotSetting = await ChatbotChannel.findOne({ guildId: msg.guild.id, channelId: msg.channel.id });
-
-    if (chatbotSetting || msg.mentions.has(client.user)) {
-      fetch(`http://api.brainshop.ai/get?bid=182262&key=q1hH7xyEdV1N0w6b&uid=1&msg=${encodeURIComponent(msg.content.replace(`<@${client.user.id}>`, ''))}`)
-        .then(res => res.json())
-        .then(data => {
-          msg.channel.sendTyping();
-          msg.channel.send(data.cnt).catch(() => {});
-        })
-        .catch(error => {
-          console.error('Error with Brainshop API request:', error);
-        });
-    }
-  } catch (e) {
-    console.log('Error:', e);
   }
 
   let messageContent = msg.content;

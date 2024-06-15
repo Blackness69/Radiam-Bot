@@ -1,5 +1,5 @@
 const client = require(process.cwd() + '/index.js');
-const reactions = require('../Schemas/utils/reactionroleSchema');
+const reactions = require('../Schemas/reactionroleSchema');
 
 client.on('messageReactionRemove', async (reaction, user) => {
   if (!reaction.message.guildId) return;

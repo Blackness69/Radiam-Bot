@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { color } = require('../../config');
-const Timer = require('../../Schemas/utils/timerSchema');  // Adjust the path as necessary
+const Timer = require('../../Schemas/timerSchema');  // Adjust the path as necessary
 
 function parseDuration(durationStr) {
   const regex = /(\d+)\s*(second|seconds|s|minute|minutes|m|hour|hours|h|day|days|d)/gi;

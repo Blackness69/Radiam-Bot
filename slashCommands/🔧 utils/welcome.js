@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder, ChannelType } = require('discord.js');
-const welcomeSchema = require('../../Schemas/utils/welcomeSchema');
+const welcomeSchema = require('../../Schemas/welcomeSchema');
 const axios = require('axios');
 const { color } = require('../../config');
 

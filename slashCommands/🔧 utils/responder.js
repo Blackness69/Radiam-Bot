@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
-const schema = require('../../Schemas/utils/autoresponder');
+const schema = require('../../Schemas/autoresponder');
 
 module.exports = {
   data: new SlashCommandBuilder()

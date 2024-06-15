@@ -1,6 +1,6 @@
 // afk.js
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const afkSchema = require('../../Schemas/utils/afkSchema');
+const afkSchema = require('../../Schemas/afkSchema');
 
 module.exports = {
     data: new SlashCommandBuilder()

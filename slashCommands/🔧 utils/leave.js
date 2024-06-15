@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder, ChannelType } = require('discord.js');
-const leaveSchema = require('../../Schemas/utils/leaveSchema');
+const leaveSchema = require('../../Schemas/leaveSchema');
 const axios = require('axios');
 
 module.exports = {

@@ -1,4 +1,4 @@
-const welcomeSchema = require('../Schemas/utils/welcomeSchema');
+const welcomeSchema = require('../Schemas/welcomeSchema');
 const { EmbedBuilder } = require('discord.js');
 const client = require(process.cwd() + '/index.js');
 const { color } = require('../config');

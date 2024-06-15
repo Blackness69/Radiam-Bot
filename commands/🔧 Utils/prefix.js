@@ -1,6 +1,6 @@
 // prefix.js
 const { getPrefix, bannedPrefix } = require('../../config.js');
-const prefixSchema = require('../../Schemas/utils/prefixSchema');
+const prefixSchema = require('../../Schemas/prefixSchema');
 const { PermissionsBitField } = require('discord.js');
 
 module.exports = {

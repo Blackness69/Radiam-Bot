@@ -1,5 +1,5 @@
 // resetPrefix.js
-const prefixSchema = require('../../Schemas/utils/prefixSchema');
+const prefixSchema = require('../../Schemas/prefixSchema');
 const { getPrefix } = require('../../config');
 const { PermissionsBitField } = require('discord.js');
 

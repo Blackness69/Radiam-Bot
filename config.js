@@ -1,6 +1,6 @@
 // config.js
 const { readFileSync } = require('fs');
-const prefixSchema = require('./Schemas/utils/prefixSchema');
+const prefixSchema = require('./Schemas/prefixSchema');
 
 async function getPrefix(guildId) {
   const prefixData = await prefixSchema.findOne({ guildId });

@@ -1,4 +1,4 @@
-const leaveSchema = require('../Schemas/utils/leaveSchema');
+const leaveSchema = require('../Schemas/leaveSchema');
 const { EmbedBuilder } = require('discord.js');
 const client = require(process.cwd() + '/index.js');
 const { color } = require('../config');
