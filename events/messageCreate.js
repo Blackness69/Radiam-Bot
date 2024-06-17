@@ -5,6 +5,7 @@ const schema = require('../Schemas/autoresponder');
 const afkSchema = require('../Schemas/afkSchema');
 const fetch = require('node-fetch');
 const levelSchema = require('../Schemas/levelSchema');
+const counting = require('../Schemas/countingSchema');
 
 client.on("messageCreate", async msg => {
   if (!msg.content || msg.author.bot || !msg.guild) return;
@@ -60,6 +61,30 @@ client.on("messageCreate", async msg => {
       }
     });
   }
+
+  // counting system
+  const countingData = await counting.findOne({ Guild: msg.guild.id });
+  if (!countingData) {
+    return;
+  } else {
+    if (msg.channel.id !== countingData.Channel) return;
+
+    const number = Number(msg.content);
+
+    if (number !== countingData.Number) {
+      return msg.react('❌');
+    } else if (countingData.LastUser === msg.author.id) {
+      msg.react('❌');
+      await msg.reply('❌ Someome else has to count that number!');
+    } else {
+      msg.react('✅');
+
+      countingData.LastUser = msg.author.id;
+      countingData.Number++;
+      await countingData.save();
+    }
+  }
+
 
   let messageContent = msg.content;
   let prefixLength = null;
