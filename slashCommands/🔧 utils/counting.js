@@ -1,6 +1,7 @@
 const { EmbedBuilder, SlashCommandBuilder, ChannelType, PermissionsBitField } = require('discord.js');
 const counting = require('../../Schemas/countingSchema');
 const { color } = require('../../config')
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('counting')
