@@ -8,6 +8,7 @@ const levelSchema = require('../Schemas/levelSchema');
 const counting = require('../Schemas/countingSchema');
 
 client.on("messageCreate", async msg => {
+  console.log(msg)
   if (!msg.content || msg.author.bot || !msg.guild) return;
 
   const currentPrefix = await getPrefix(msg.guild.id);

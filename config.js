@@ -29,5 +29,4 @@ module.exports = {
     home: "<:home:1245777449149796445>",
     info: "<:info:1245777371689255034>"
   },
-  defaultPrefix: 'r.'
 };
