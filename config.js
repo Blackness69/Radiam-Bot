@@ -7,7 +7,6 @@ async function getPrefix(guildId) {
   return prefixData ? prefixData.prefix : "r."; // Default prefix 'r.'
 }
 
-
 module.exports = {
   token: process.env.token || readFileSync('token.txt', 'utf-8'),
   getPrefix, // Exporting the function to fetch prefix dynamically

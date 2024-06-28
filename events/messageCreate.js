@@ -1,9 +1,9 @@
+// messageCreate.js
 const { getPrefix, ownerIds } = require('../config');
 const Discord = require('discord.js');
 const client = require(process.cwd() + '/index.js');
 const schema = require('../Schemas/autoresponder');
 const afkSchema = require('../Schemas/afkSchema');
-const fetch = require('node-fetch');
 const levelSchema = require('../Schemas/levelSchema');
 const counting = require('../Schemas/countingSchema');
 
@@ -62,39 +62,32 @@ client.on("messageCreate", async msg => {
     });
   }
 
-  // counting system
+  // Counting system
   const countingData = await counting.findOne({ Guild: msg.guild.id });
-  if (!countingData) {
-    return;
-  } else {
-    if (msg.channel.id !== countingData.Channel) return;
+  if (countingData) {
+    if (msg.channel.id === countingData.Channel) {
+      const number = Number(msg.content);
 
-    const number = Number(msg.content);
+      if (number !== countingData.Number) {
+        return msg.react('❌');
+      } else if (countingData.LastUser === msg.author.id) {
+        msg.react('❌');
+        await msg.reply('❌ Someone else has to count that number!');
+      } else {
+        msg.react('✅');
 
-    if (number !== countingData.Number) {
-      return msg.react('❌');
-    } else if (countingData.LastUser === msg.author.id) {
-      msg.react('❌');
-      await msg.reply('❌ Someome else has to count that number!');
-    } else {
-      msg.react('✅');
-
-      countingData.LastUser = msg.author.id;
-      countingData.Number++;
-      await countingData.save();
+        countingData.LastUser = msg.author.id;
+        countingData.Number++;
+        await countingData.save();
+      }
     }
   }
-
 
   let messageContent = msg.content;
   let prefixLength = null;
 
   if (messageContent.startsWith(botMention) || messageContent.startsWith(botMentionWithExclamation)) {
-    if (messageContent.startsWith(botMention)) {
-      prefixLength = botMention.length;
-    } else if (messageContent.startsWith(botMentionWithExclamation)) {
-      prefixLength = botMentionWithExclamation.length;
-    }
+    prefixLength = messageContent.startsWith(botMention) ? botMention.length : botMentionWithExclamation.length;
   } else if (messageContent.toLowerCase().startsWith(currentPrefix.toLowerCase())) {
     prefixLength = currentPrefix.length;
   } else if (messageContent.toLowerCase().startsWith("r.")) {
@@ -112,8 +105,10 @@ client.on("messageCreate", async msg => {
     try {
       await command.execute({ client, Discord, args, prefix: currentPrefix, msg });
     } catch (error) {
-      console.error(error);
+      console.error('Error executing command:', error);
       return msg.reply('There was an error executing that command!');
     }
+  } else {
+    console.log(`Command not found: ${commandName}`);
   }
 });
