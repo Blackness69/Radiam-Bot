@@ -72,13 +72,13 @@ module.exports = {
 
     const helpEmbed = new EmbedBuilder()
       .setColor(`${color.default}`)
-      .setTitle('List of available commands category')
+      .setTitle('Help Menu')
       .setAuthor({
         name: msg.guild.name,
         iconURL: msg.guild.iconURL({ dynamic: true })
       })
       .setFooter({ text: `Requested by ${msg.author.tag}`, iconURL: msg.author.displayAvatarURL({ dynamic: true }) })
-      .setDescription(`**Links:**\n[Invite Me](https://discord.com/oauth2/authorize?client_id=1233698268584870010&permissions=8&scope=bot+applications.commands)\n[Support Server](https://discord.com/invite/xwG8rtzmzA)\n[Top.gg](https://top.gg/bot/1233698268584870010)\n\n${emoji.dot} *An all-in-one Discord bot to enhance your server with versatile features and interactive fun.*\n\n**\`\`\`<> - Required Arguments | [] - Optional Arguments\`\`\`**\n\n${emoji.search} **__My Available Commands Category__**\n> ${(homepageEmoji ? `<${homepageEmoji.animated ? 'a' : ''}:${homepageEmoji.name}:${homepageEmoji.id}>` : '🏠')} : **HomePage**\n> ${categories.map(({ name, emoji }) => `${emoji.id ? `<${emoji.animated ? 'a' : ''}:${emoji.name}:${emoji.id}>` : emoji.name} : **${name}**`).join('\n> ')}`)
+      .setDescription(`${emoji.dot} *An all-in-one Discord bot to enhance your server with versatile features and interactive fun.*\n\n**\`\`\`<> - Required Arguments | [] - Optional Arguments\`\`\`**\n\n${emoji.search} **__My Available Commands Category__**\n> ${(homepageEmoji ? `<${homepageEmoji.animated ? 'a' : ''}:${homepageEmoji.name}:${homepageEmoji.id}>` : '🏠')} : **HomePage**\n> ${categories.map(({ name, emoji }) => `${emoji.id ? `<${emoji.animated ? 'a' : ''}:${emoji.name}:${emoji.id}>` : emoji.name} : **${name}**`).join('\n> ')}\n\n**Links:**\n[Invite Me](https://discord.com/oauth2/authorize?client_id=1233698268584870010&permissions=8&scope=bot+applications.commands) • [Support Server](https://discord.com/invite/xwG8rtzmzA) • [Top.gg](https://top.gg/bot/1233698268584870010)`)
       .setTimestamp();
 
     const response = await msg.channel.send({ embeds: [helpEmbed], components: [row] });
