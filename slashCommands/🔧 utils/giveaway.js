@@ -216,7 +216,7 @@ module.exports = {
       }
     } catch (error) {
       console.error(error);
-      await interaction.reply({ content: 'An error occurred while executing the command.', ephemeral: true });
+      await interaction.editReply({ content: 'An error occurred while executing the command.', ephemeral: true });
     }
   },
 };
