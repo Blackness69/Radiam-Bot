@@ -92,12 +92,12 @@ module.exports = {
 
             try {
                 let settings = await Vanity.findOne({ guildId });
-                if (settings) {
+                if (settings && settings.vanities.length > 0) {
                     settings.vanities = [];
                     await settings.save();
                     await interaction.reply({ content: 'All vanity URLs have been removed.', ephemeral: true });
                 } else {
-                    await interaction.reply({ content: 'No vanity settings found for this guild.', ephemeral: true });
+                    await interaction.reply({ content: 'No vanity URLs found to remove.', ephemeral: true });
                 }
             } catch (error) {
                 console.error('Error removing all vanities:', error);
