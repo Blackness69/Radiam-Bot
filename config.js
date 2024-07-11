@@ -17,7 +17,8 @@ module.exports = {
   YOUTUBE_API_KEY: process.env.YoutubeApiKey,
   color: {
     default: "#8e00e7",
-    red: "#ff0000"
+    red: "#ff0000",
+    green: "#008000"
   },
   emoji: {
     search: "<:search:1245782174221733918>",
