@@ -1,9 +1,9 @@
-const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const Vanity = require('../../Schemas/vanitySchema'); // Ensure the path is correct
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('vanity-role')
+        .setName('vanity')
         .setDescription('Manage vanity URL settings.')
         .addSubcommand(subcommand =>
             subcommand
@@ -54,6 +54,11 @@ module.exports = {
             try {
                 let settings = await Vanity.findOne({ guildId });
                 if (settings) {
+                    const exists = settings.vanities.some(v => v.vanity === vanity);
+                    if (exists) {
+                        await interaction.reply({ content: 'This vanity URL already exists.', ephemeral: true });
+                        return;
+                    }
                     settings.vanities.push({ vanity, channelId: channel.id, roleId: role.id });
                 } else {
                     settings = new Vanity({
