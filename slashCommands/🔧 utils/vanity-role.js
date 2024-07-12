@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 const Vanity = require('../../Schemas/vanitySchema'); // Ensure the path is correct
 
 module.exports = {
@@ -41,6 +41,10 @@ module.exports = {
     async execute({ interaction }) {
         const subcommand = interaction.options.getSubcommand();
 
+        if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
+            return interaction.reply({ content: "You don't have the Administrator permission to use that command.", ephemeral: true });
+        }
+        
         if (subcommand === 'add') {
             const vanity = interaction.options.getString('vanity');
             const channel = interaction.options.getChannel('channel');
@@ -50,11 +54,6 @@ module.exports = {
             try {
                 let settings = await Vanity.findOne({ guildId });
                 if (settings) {
-                    const exists = settings.vanities.some(v => v.vanity === vanity);
-                    if (exists) {
-                        await interaction.reply({ content: 'This vanity URL already exists.', ephemeral: true });
-                        return;
-                    }
                     settings.vanities.push({ vanity, channelId: channel.id, roleId: role.id });
                 } else {
                     settings = new Vanity({
