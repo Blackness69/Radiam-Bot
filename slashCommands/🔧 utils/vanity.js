@@ -110,7 +110,7 @@ module.exports = {
                 const settings = await Vanity.findOne({ guildId });
 
                 if (settings && settings.vanities.length > 0) {
-                    const vanityList = settings.vanities.map((v, index) => `#${index + 1}: \`\`\`Vanity URL: ${v.vanity}\nChannel ID: ${v.channelId}\nRole ID: ${v.roleId}\`\`\``).join('\n\n');
+                    const vanityList = settings.vanities.map((v, index) => `#${index + 1} \`\`\`Vanity URL: ${v.vanity}\nChannel ID: ${v.channelId}\nRole ID: ${v.roleId}\`\`\``).join('\n\n');
                     await interaction.reply({ content: `Current settings:\n${vanityList}`, ephemeral: true });
                 } else {
                     await interaction.reply({ content: 'No vanity settings found for this guild.', ephemeral: true });
