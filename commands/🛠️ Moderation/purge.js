@@ -5,12 +5,14 @@ module.exports = {
   name: 'purge',
   description: 'Delete a specified number of messages (between 1 and 100), or all messages if "purge all" is specified.',
   async execute({ msg, args }) {
+    // Check if the user has the ManageMessages permission
     if (!msg.member.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
-      return msg.reply('❌ | You need the ``ManageMessages`` permission to use this command.');
+      return msg.reply('❌ | You need the `ManageMessages` permission to use this command.');
     }
 
+    // Check if the bot has the ManageMessages permission
     if (!msg.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
-      return msg.reply('❌ | I need the ``ManageMessages`` permission to use this command.');
+      return msg.reply('❌ | I need the `ManageMessages` permission to use this command.');
     }
 
     let amount;
@@ -27,14 +29,14 @@ module.exports = {
       const now = Date.now();
       let fetched = await msg.channel.messages.fetch({ limit: amount });
 
-      const commandMessage = fetched.filter(m => m.id === msg.id);
+      // Filter out the command message itself and messages older than 14 days
       fetched = fetched.filter(m => now - m.createdTimestamp < 14 * 24 * 60 * 60 * 1000 && m.id !== msg.id);
 
       if (fetched.size === 0) {
-        return msg.reply('No messages found that are less than 14 days old.');
+        return msg.reply("I can't delete messages that are older than 14 days.");
       }
 
-      await msg.channel.bulkDelete(fetched, true); // `true` will filter out messages older than 14 days, but we already did this manually
+      await msg.channel.bulkDelete(fetched, true); // `true` filters out messages older than 14 days, but we already did this manually
 
       const reply = await msg.channel.send(`Successfully purged ${fetched.size} message(s).`);
       setTimeout(() => {
@@ -42,7 +44,7 @@ module.exports = {
       }, 3000);
 
       if (fetched.size < amount) {
-        const feedback = msg.reply('Some messages were not deleted because they are older than 14 days.');
+        msg.reply('Some messages were not deleted because they are older than 14 days.');
       }
     } catch (error) {
       console.error(error);
