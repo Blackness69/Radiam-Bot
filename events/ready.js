@@ -48,4 +48,7 @@ client.on("ready", async (client) => {
   ap.on('error', () => {
     console.log('An error occured while posting stats on top.gg')
   })
+  
+  const userCount = client.users.cache.size;
+  console.log(`userCount: ${userCount}\nserverCount: ${serverCount}`);
 });

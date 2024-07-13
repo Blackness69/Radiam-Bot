@@ -1,6 +1,9 @@
 const { getPrefix, token, mongoURL, color } = require('./config.js');
 const fs = require('fs');
 const ms = require('pretty-ms');
+const { Player } = require('discord-player');
+const config = require('./config.js');
+const { opt } = require('./config.js');
 require('dotenv').config();
 const express = require('express');
 const app = express();
@@ -18,7 +21,7 @@ const { ActivityType, Collection, GatewayIntentBits, Client, Collector, VoiceCha
 const Discord = require('discord.js');
 const client = new Client({
   intents: Object.keys(GatewayIntentBits).map(intent => intent),
-  partials: [Partials.Message, Partials.GuildMessageReactions, Partials.Channel, Partials.MessageReactionAdd, Partials.MessageReactionRemove, Partials.Reaction],
+  partials: Object.keys(Partials).map(partial => partial),
   allowedMentions: { repliedUser: false, parse: ['users'] }
 });
 
@@ -31,6 +34,7 @@ client.messageTimestamps = new Map();
 client.snipes = new Map();
 client.messageTimestamps = new Map();
 client.cooldowns = new Map();
+
         const commandFolders = fs.readdirSync('./commands');
         for (const folder of commandFolders) {
           const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
