@@ -1,9 +1,7 @@
 const { getPrefix, token, mongoURL, color } = require('./config.js');
 const fs = require('fs');
 const ms = require('pretty-ms');
-const { Player } = require('discord-player');
 const config = require('./config.js');
-const { opt } = require('./config.js');
 require('dotenv').config();
 const express = require('express');
 const app = express();

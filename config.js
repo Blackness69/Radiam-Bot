@@ -14,7 +14,6 @@ module.exports = {
   ownerIds: ["1081995719210172497", "1229341293176557570", "1153611682250227764"], // Array of owner IDs
   mainOwnerId: "1153611682250227764",
   mongoURL: process.env.mongoURL || readFileSync('mongoURL.txt', 'utf-8'),
-  YOUTUBE_API_KEY: process.env.YoutubeApiKey,
   color: {
     default: "#8e00e7",
     red: "#ff0000",

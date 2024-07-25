@@ -86,16 +86,10 @@ client.on("messageCreate", async msg => {
   let messageContent = msg.content;
   let prefixLength = null;
 
-  if (messageContent.startsWith(botMention) || messageContent.startsWith(botMentionWithExclamation)) {
-    prefixLength = messageContent.startsWith(botMention) ? botMention.length : botMentionWithExclamation.length;
-  } else if (messageContent.toLowerCase().startsWith(currentPrefix.toLowerCase())) {
-    prefixLength = currentPrefix.length;
-  } else if (messageContent.toLowerCase().startsWith("r.")) {
-    prefixLength = "r.".length;
-  } else {
-    return;
-  }
-
+  if (messageContent.startsWith(botMention) || messageContent.startsWith(botMentionWithExclamation)) prefixLength = messageContent.startsWith(botMention) ? botMention.length : botMentionWithExclamation.length;
+  if (!prefixLength && messageContent.toLowerCase().startsWith("r.")) prefixLength = "r.".length;
+if (!prefixLength && messageContent.toLowerCase().startsWith(currentPrefix.toLowerCase())) prefixLength = currentPrefix.length;
+if(!prefixLength) return;
   messageContent = msg.content.slice(prefixLength).trim();
   const args = messageContent.split(/ +/);
   const commandName = args.shift().toLowerCase();
