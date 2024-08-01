@@ -23,6 +23,7 @@ client.on("guildMemberAdd", async (member) => {
 
     if (!channel) return;
 
+    try {
     let messageToSend = welcomeMessage
         .replace(/{userMention}/g, `<@${member.id}>`)
         .replace(/{userName}/g, member.user.username)
@@ -54,5 +55,9 @@ client.on("guildMemberAdd", async (member) => {
         channel.send({ content: `<@${member.id}>`, embeds: [embed] });
     } else {
         channel.send(messageToSend);
+     }
+    } catch (e) {
+        channel.send('An error occured whil sending welcome message.');
+        console.error(e);
     }
 });
