@@ -23,6 +23,7 @@ client.on("guildMemberRemove", async (member) => {
     
     if (!channel) return;
 
+    try {
     let messageToSend = leaveMessage
         .replace(/{userMention}/g, `<@${member.id}>`)
         .replace(/{userName}/g, member.user.username)
@@ -54,5 +55,9 @@ client.on("guildMemberRemove", async (member) => {
         channel.send({ content: `<@${member.id}>`, embeds: [embed] });
     } else {
         channel.send(messageToSend);
+    }
+   } catch (e) {
+            channel.send('An error occured while sending leave message.');
+            console.error(e);
     }
 });

@@ -57,7 +57,7 @@ client.on("guildMemberAdd", async (member) => {
         channel.send(messageToSend);
      }
     } catch (e) {
-        channel.send('An error occured whil sending welcome message.');
+        channel.send('An error occured while sending welcome message.');
         console.error(e);
     }
 });
