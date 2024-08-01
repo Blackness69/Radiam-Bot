@@ -8,12 +8,12 @@ async function getPrefix(guildId) {
 }
 
 module.exports = {
-  token: process.env.token || readFileSync('token.txt', 'utf-8'),
+  token: process.env.token || readFileSync('src/token.txt', 'utf-8'),
   getPrefix, // Exporting the function to fetch prefix dynamically
   clientId: process.env.clientId || "1229438321395109929",
   ownerIds: ["1081995719210172497", "1229341293176557570", "1153611682250227764"], // Array of owner IDs
   mainOwnerId: "1153611682250227764",
-  mongoURL: process.env.mongoURL || readFileSync('mongoURL.txt', 'utf-8'),
+  mongoURL: process.env.mongoURL || readFileSync('src/mongoURL.txt', 'utf-8'),
   color: {
     default: "#8e00e7",
     red: "#ff0000",
