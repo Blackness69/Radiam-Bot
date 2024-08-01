@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const ms = require('ms');
-const client = require(process.cwd() + '/index.js');
+const client = require(process.cwd() + '/src/index.js');
 const { snipes } = require('../index.js');
 
 client.on("messageDelete", async (msg) => {

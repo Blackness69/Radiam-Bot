@@ -6,7 +6,7 @@ table.setHeading('Mongo Database', 'Stats').setBorder('|', '=', "0", "0");
 const mongoose = require('mongoose');
 const { mongoURL } = require('../config.js');
 const { AutoPoster } = require('topgg-autoposter');
-const client = require(process.cwd() + '/index.js')
+const client = require(process.cwd() + '/src/index.js')
 
 client.on("ready", async (client) => {
   const serverCount = client.guilds.cache.size;

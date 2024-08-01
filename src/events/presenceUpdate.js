@@ -1,6 +1,6 @@
 const { EmbedBuilder, ChannelType } = require('discord.js');
 const Vanity = require('../Schemas/vanitySchema');
-const client = require(process.cwd() + '/index.js');
+const client = require(process.cwd() + '/src/index.js');
 const { color } = require('../config')
 client.on('presenceUpdate', async (oldPresence, newPresence) => {
     const guildId = newPresence.guild.id;

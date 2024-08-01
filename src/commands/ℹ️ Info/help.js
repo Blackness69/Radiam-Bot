@@ -1,7 +1,6 @@
 // commands/help.js
 const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
-const { getPrefix } = require('../../config');
-const { color, emoji } = require('../../config');
+const { color, emoji, getPrefix } = require('../../config');
 
 module.exports = {
   usage: 'help',

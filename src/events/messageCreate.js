@@ -1,7 +1,7 @@
 // messageCreate.js
 const { getPrefix, ownerIds } = require('../config');
 const Discord = require('discord.js');
-const client = require(process.cwd() + '/index.js');
+const client = require(process.cwd() + '/src/index.js');
 const schema = require('../Schemas/autoresponder');
 const afkSchema = require('../Schemas/afkSchema');
 const levelSchema = require('../Schemas/levelSchema');

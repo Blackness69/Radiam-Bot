@@ -6,7 +6,7 @@ const ticketSchema = require('../Schemas/ticketSchema');
 const { createTranscript } = require('discord-html-transcripts');
 const { color } = require('../config');
 
-const client = require(process.cwd() + '/index.js')
+const client = require(process.cwd() + '/src/index.js')
 
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.guild) return;

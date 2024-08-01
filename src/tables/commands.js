@@ -7,8 +7,8 @@ const table = new AsciiTable();
 table.setHeading('Commands', 'Stats').setBorder('|', '=', '0', '0');
 
 module.exports = client => {
-  fs.readdirSync('./commands/').forEach(dir => {
-    const files = fs.readdirSync(`./commands/${dir}/`).filter(file => file.endsWith('.js'));
+  fs.readdirSync('./src/commands/').forEach(dir => {
+    const files = fs.readdirSync(`./src/commands/${dir}/`).filter(file => file.endsWith('.js'));
 
     if (!files || files.length <= 0) {
       console.log(colors.red(`No commands in directory ${dir}.`));

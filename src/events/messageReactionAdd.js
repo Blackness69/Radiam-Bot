@@ -1,4 +1,4 @@
-const client = require(process.cwd() + '/index.js');
+const client = require(process.cwd() + '/src/index.js');
 const reactions = require('../Schemas/reactionroleSchema');
 
 client.on('messageReactionAdd', async (reaction, user) => {

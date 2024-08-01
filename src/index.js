@@ -33,9 +33,9 @@ client.snipes = new Map();
 client.messageTimestamps = new Map();
 client.cooldowns = new Map();
 
-        const commandFolders = fs.readdirSync('./commands');
+        const commandFolders = fs.readdirSync('./src/commands');
         for (const folder of commandFolders) {
-          const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+          const commandFiles = fs.readdirSync(`./src/commands/${folder}`).filter(file => file.endsWith('.js'));
           for (const file of commandFiles) {
             const command = require(`./commands/${folder}/${file}`);
     command.category = folder;
@@ -48,9 +48,9 @@ client.cooldowns = new Map();
   }
 };
 
-const slashCommandFolders = fs.readdirSync('./slashCommands');
+const slashCommandFolders = fs.readdirSync('./src/slashCommands');
 for (const folder of slashCommandFolders) {
-  const slashCommandFiles = fs.readdirSync(`./slashCommands/${folder}`).filter(file => file.endsWith('.js'));
+  const slashCommandFiles = fs.readdirSync(`./src/slashCommands/${folder}`).filter(file => file.endsWith('.js'));
   for (const file of slashCommandFiles) {
     const slashCommand = require(`./slashCommands/${folder}/${file}`);
     slashCommand.category = folder;
@@ -62,14 +62,14 @@ for (const folder of slashCommandFolders) {
 
 module.exports = client;
 // Load event handler files
-const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+const eventFiles = fs.readdirSync('./src/events').filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
   require(`./events/${file}`);
 };
 
 // Load table files
-const tableFiles = fs.readdirSync('./tables').filter(file => file.endsWith('.js'));
+const tableFiles = fs.readdirSync('./src/tables').filter(file => file.endsWith('.js'));
 
 for (const file of tableFiles) {
  client.on("ready", require(`./tables/${file}`));
