@@ -36,7 +36,7 @@ module.exports = {
         return msg.reply("I can't delete messages that are older than 14 days.").then((reply1) => {
           setTimeout(() => {
             reply1.delete();
-          }, 3000);
+          }, 5000);
         });
       }
 
@@ -45,6 +45,7 @@ module.exports = {
       const reply = await msg.channel.send(`Successfully purged ${fetched.size} message(s).`);
       setTimeout(() => {
         reply.delete();
+        msg.delete();
       }, 3000);
 
     } catch (error) {
