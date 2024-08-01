@@ -33,7 +33,11 @@ module.exports = {
       fetched = fetched.filter(m => now - m.createdTimestamp < 14 * 24 * 60 * 60 * 1000 && m.id !== msg.id);
 
       if (fetched.size === 0) {
-        return msg.reply("I can't delete messages that are older than 14 days.");
+        return msg.reply("I can't delete messages that are older than 14 days.").then((reply1) => {
+          setTimeout(() => {
+            reply1.delete();
+          }, 3000);
+        });
       }
 
       await msg.channel.bulkDelete(fetched, true); // `true` filters out messages older than 14 days, but we already did this manually
@@ -43,9 +47,6 @@ module.exports = {
         reply.delete();
       }, 3000);
 
-      if (fetched.size < amount) {
-        msg.reply('Some messages were not deleted because they are older than 14 days.');
-      }
     } catch (error) {
       console.error(error);
       msg.reply('There was an error purging messages.');
