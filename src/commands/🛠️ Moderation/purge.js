@@ -45,7 +45,6 @@ module.exports = {
       const reply = await msg.channel.send(`Successfully purged ${fetched.size} message(s).`);
       setTimeout(() => {
         reply.delete();
-        msg.delete();
       }, 3000);
 
     } catch (error) {
