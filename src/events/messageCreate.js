@@ -1,11 +1,10 @@
-// messageCreate.js
 const { getPrefix, ownerIds } = require('../config');
 const Discord = require('discord.js');
 const client = require(process.cwd() + '/src/index.js');
 const schema = require('../Schemas/autoresponder');
 const afkSchema = require('../Schemas/afkSchema');
-const levelSchema = require('../Schemas/levelSchema');
 const counting = require('../Schemas/countingSchema');
+const noPrefixSchema = require('../Schemas/noPrefixSchema');
 
 client.on("messageCreate", async msg => {
   if (!msg.content || msg.author.bot || !msg.guild) return;
@@ -83,16 +82,28 @@ client.on("messageCreate", async msg => {
     }
   }
 
+  // Prefix system
   let messageContent = msg.content;
   let prefixLength = null;
 
-  if (messageContent.startsWith(botMention) || messageContent.startsWith(botMentionWithExclamation)) prefixLength = messageContent.startsWith(botMention) ? botMention.length : botMentionWithExclamation.length;
-  if (!prefixLength && messageContent.toLowerCase().startsWith("r.")) prefixLength = "r.".length;
-if (!prefixLength && messageContent.toLowerCase().startsWith(currentPrefix.toLowerCase())) prefixLength = currentPrefix.length;
-if(!prefixLength) return;
-  messageContent = msg.content.slice(prefixLength).trim();
-  const args = messageContent.split(/ +/);
-  const commandName = args.shift().toLowerCase();
+  const noPrefixUser = await noPrefixSchema.findOne({ userId: msg.author.id });
+  let commandName, args;
+
+    if (messageContent.startsWith(botMention) || messageContent.startsWith(botMentionWithExclamation)) prefixLength = messageContent.startsWith(botMention) ? botMention.length : botMentionWithExclamation.length;
+    if (!prefixLength && messageContent.toLowerCase().startsWith("r.")) prefixLength = "r.".length;
+    if (!prefixLength && messageContent.toLowerCase().startsWith(currentPrefix.toLowerCase())) prefixLength = currentPrefix.length;
+  
+  if (prefixLength) {
+    messageContent = msg.content.slice(prefixLength).trim();
+    args = messageContent.split(/ +/);
+    commandName = args.shift().toLowerCase();
+  } else if (noPrefixUser) {
+    const messageArray = messageContent.trim().split(/ +/);
+    commandName = messageArray.shift().toLowerCase();
+    args = messageArray;
+  } else {
+    return;
+  }
 
   const command = client.commands.get(commandName) || client.commands.get(client.aliases.get(commandName));
   if (command) {
